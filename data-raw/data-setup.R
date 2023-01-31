@@ -1,4 +1,4 @@
-# Takes yaml files from data-raw directory and produces Rda objects in data directory
+# Takes yaml files from data-raw directory and produces rda objects in data directory
 
 library(tidyverse)
 

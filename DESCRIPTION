@@ -7,8 +7,8 @@ Authors@R:
            role = c("aut", "cre"),
            email = "k.young3@exeter.ac.uk",
            comment = c(ORCID = "0000-0003-2570-3864"))
-Description: Clean biomarker test results in CPRD Aurum to retain only those with plausible values and a limited number of correct unit codes. Also has functions for calculating CVD (QRISK2 and QDiabetes-Heart Failure) and CKD (CKDPC-risk) risk.
-License: GPL-3
+Description: Clean biomarker test results in CPRD Aurum to retain only those with plausible values and a limited number of correct unit codes. Also has functions for calculating eGFR from creatinine using the CKD-EPI Creatinine Equation 2021, and calculating CVD (QRISK2 and QDiabetes-Heart Failure) and CKD (CKDPC-risk) risk scores.
+License: GPL-3 + file LICENSE
 URL: https://github.com/Exeter-Diabetes/EHRBiomarkr
 Encoding: UTF-8
 LazyData: true
@@ -17,5 +17,6 @@ Depends:
 Imports: 
     dplyr,
     magrittr,
-    here
+    here,
+    stats
 RoxygenNote: 7.2.3

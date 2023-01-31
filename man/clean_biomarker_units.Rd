@@ -9,6 +9,8 @@ clean_biomarker_units(dataset, numunitid_col, biomrkr)
 \arguments{
 \item{dataset}{- dataset containing biomarker observations}
 
+\item{numunitid_col}{- name of column with numunitids in}
+
 \item{biomrkr}{- name of biomarker to clean (acr/alt/ast/bmi/creatinine/dbp/fastingglucose/hba1c/hdl/height/ldl/pcr/sbp/smoking (for QRISK2)/totalcholesterol/triglyceride/weight)}
 }
 \description{
