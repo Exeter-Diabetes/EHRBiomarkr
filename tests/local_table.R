@@ -82,7 +82,7 @@ analysis = cprd$analysis("mm")
 
 example_dataset <- example_dataset %>% analysis$cached("20230116_t2d_1stinstance_interim_2")
 
-example_dataset <- collect(example_dataset)
+example_dataset <- collect(example_dataset %>% head(100) %>% mutate(patid=as.character(patid)))
 
 is.integer64 <- function(x){
   class(x)=="integer64"
@@ -90,11 +90,8 @@ is.integer64 <- function(x){
 
 example_dataset <- example_dataset %>% mutate_if(is.integer64, as.integer)
 
-analysis = cprd$analysis("katie_test")
 
 qdhf <- example_dataset %>%
-  
-  head(100) %>%
   
   mutate(sex2=ifelse(sex=="male", "male", ifelse(sex=="female", "female", NA))) %>%
   
