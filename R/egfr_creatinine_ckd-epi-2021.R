@@ -19,11 +19,11 @@ ckd_epi_2021_egfr = function(dataset, creatinine_col, sex_col, age_at_creatinine
   
   new_dataset <- dataset %>%
     mutate(creatinine_mgdl=!!creatinine_column*0.0113) %>%
-    mutate(ckd_epi_2021_egfr=ifelse(creatinine_mgdl<=0.7 & !!sex_column=="female",(142 * ((creatinine_mgdl/0.7)^-0.241) * (0.9938^age_at_creatinine_column) * 1.012)))#,
-    #                                 ifelse(creatinine_mgdl>0.7 & sex_column=="female",(142 * ((creatinine_mgdl/0.7)^-1.2) * (0.9938^age_at_creatinine_column) * 1.012),
-    #                                        ifelse(creatinine_mgdl<=0.9 & sex_column=="male",(142 * ((creatinine_mgdl/0.9)^-0.302) * (0.9938^age_at_creatinine_column)),
-    #                                               ifelse(creatinine_mgdl>0.9 & sex_column=="male",(142 * ((creatinine_mgdl/0.9)^-1.2) * (0.9938^age_at_creatinine_column)),NA))))) %>%
-    # select(-creatinine_mgdl)
+    mutate(ckd_epi_2021_egfr=ifelse(creatinine_mgdl<=0.7 & !!sex_column=="female",(142 * ((creatinine_mgdl/0.7)^-0.241) * (0.9938^!!age_at_creatinine_column) * 1.012),
+                                    ifelse(creatinine_mgdl>0.7 & !!sex_column=="female",(142 * ((creatinine_mgdl/0.7)^-1.2) * (0.9938^!!age_at_creatinine_column) * 1.012),
+                                           ifelse(creatinine_mgdl<=0.9 & !!sex_column=="male",(142 * ((creatinine_mgdl/0.9)^-0.302) * (0.9938^!!age_at_creatinine_column)),
+                                                  ifelse(creatinine_mgdl>0.9 & !!sex_column=="male",(142 * ((creatinine_mgdl/0.9)^-1.2) * (0.9938^a!!ge_at_creatinine_column)),NA))))) %>%
+    select(-creatinine_mgdl)
   
   message("New column 'ckd_epi_2021_egfr' added")
   
