@@ -1,5 +1,5 @@
-#library(devtools)
-#devtools::install_github("Exeter-Diabetes/EHRBiomarkr")
+library(devtools)
+devtools::install_github("Exeter-Diabetes/EHRBiomarkr")
 
 library(tidyverse)
 library(aurum)
