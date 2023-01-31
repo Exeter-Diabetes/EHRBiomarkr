@@ -2,11 +2,14 @@
 #' 
 #' @description only keep measurements with 'acceptable' unit codes (numunitid) for specified biomarker
 #' @param dataset - dataset containing biomarker observations
+#' @param numunitid_col - name of column containing numunitid codes
 #' @param biomrkr - name of biomarker to clean (acr/alt/ast/bmi/creatinine/dbp/fastingglucose/hba1c/hdl/height/ldl/pcr/sbp/smoking (for QRISK2)/totalcholesterol/triglyceride/weight)
+#' @importFrom magrittr %>%
+#' @importFrom stats setNames
 #' @export
 
 clean_biomarker_units = function(dataset, numunitid_col, biomrkr) {
-  unit_codes <- data.frame(numunitid=unlist(lapply(aurum::biomarkerAcceptableUnits[biomrkr], function(y) lapply(y, as.numeric))))
+  unit_codes <- data.frame(numunitid=unlist(lapply(EHRBiomarkr::biomarkerAcceptableUnits[biomrkr], function(y) lapply(y, as.numeric))))
   
   numunitid_column <- deparse(substitute(numunitid_col))
   
@@ -25,13 +28,15 @@ clean_biomarker_units = function(dataset, numunitid_col, biomrkr) {
 #' 
 #' @description only keep measurements within acceptable limits for specified biomarker
 #' @param dataset - dataset containing biomarker observations
+#' @param biomrkr_col - name of column containing biomarker values
 #' @param biomrkr - name of biomarker to clean (acr/alt/ast/bmi/creatinine/dbp/fastingglucose/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)
+#' @importFrom magrittr %>%
 #' @export
 
 clean_biomarker_values = function(dataset, biomrkr_col, biomrkr) {
   
-  lower_limit <- unname(unlist(lapply(aurum::biomarkerAcceptableLimits[biomrkr], function(y) lapply(y, as.numeric)))[1])
-  upper_limit <- unname(unlist(lapply(aurum::biomarkerAcceptableLimits[biomrkr], function(y) lapply(y, as.numeric)))[2])
+  lower_limit <- unname(unlist(lapply(EHRBiomarkr::biomarkerAcceptableLimits[biomrkr], function(y) lapply(y, as.numeric)))[1])
+  upper_limit <- unname(unlist(lapply(EHRBiomarkr::biomarkerAcceptableLimits[biomrkr], function(y) lapply(y, as.numeric)))[2])
   
   if (biomrkr=="haematocrit") {
     message("clean_biomarker_values will remove haematocrit values which are not in proportion out of 1")
