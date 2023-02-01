@@ -40,7 +40,7 @@ clean_sbp <- raw_sbp %>%
   clean_biomarker_values("sbp") %>%
   clean_biomarker_units("sbp")
 ```
-Further info on how we implement these functions can be found here: [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists#biomarker-algorithms).
+Further info on how we implement these functions as part of a CPRD Aurum processing pipeline can be found here: [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists#biomarker-algorithms).
 
 &nbsp;
 
