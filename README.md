@@ -61,7 +61,7 @@ clean_egfr_medcodes <- clean_creatinine_blood_medcodes %>%
 
 Functions for calculating the following QRISK2 (2017) and QDiabetes-Heart Failure (2015) are included in this package. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
 
--   QRISK2 (2017)
+### QRISK2 (2017)
 
 Example:
 
@@ -87,7 +87,7 @@ results <- dataframe %>%
 
 &nbsp;
 
--   QDiabetes-Heart Failure (2015)
+### QDiabetes-Heart Failure (2015)
 
 Example:
 
