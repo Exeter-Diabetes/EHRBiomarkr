@@ -6,19 +6,23 @@ This package has various functions for cleaning and prcoessing biomarkers in EHR
 
 Two functions for cleaning biomarker values are included in this package, and can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
 
-`clean_biomarker_values` removes values outside of plausible limits (limits found in data/biomarkerAcceptableLimits.rda or by typing `biomarkerAcceptableLimits' with the package loaded, also in our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). See man/biomarkerAcceptableLimits.Rd (or `?biomarkerAcceptableLimits` with the package loaded) for details of how these were ascertained.
+`clean_biomarker_values` removes values outside of plausible limits (run `biomarkerAcceptableLimits` to see limits, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). Run `?biomarkerAcceptableLimits` for details of how these were ascertained.
 
-`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (appropriate unit codes found in data/biomarkerAcceptableUnits.rda or by typing `biomarkerAcceptableUnits' with the package loaded, also in our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). See man/biomarkerAcceptableUnits.Rd (or `?biomarkerAcceptableUnits` with the package loaded) for details of how these were ascertained.
+`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (run `biomarkerAcceptableLimits` to see appropriate unit codes, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). Run `?biomarkerAcceptableUnits` for details of how these were ascertained.
 
 These functions can be applied to the following biomarkers:
 
 -   Albumin-creatinine ratio (`acr`)
+-   (Blood) albumin (`albumin_blood`)
 -   Alanine aminotransferase (`alt`)
 -   Aspartate aminotransferase(`ast`)
+-   Bilirubin (`bilirubin`)
 -   BMI (adults only; `bmi`)
--   Serum/plasma creatinine (`creatinine`)
+-   Serum/plasma creatinine (`creatinine_blood`)
 -   Diastolic blood pressure (`dbp`)
--   Fasting glucose (’fastingglucose\`)
+-   Fasting glucose (`fastingglucose`)
+-   Haematocrit (`haematocrit`)
+-   Haemoglobin (`haemoglobin`)
 -   HbA1c (`hba1c`)
 -   HDL (`hdl`)
 -   Height (adults only; `height`)
@@ -27,7 +31,7 @@ These functions can be applied to the following biomarkers:
 -   Systolic blood pressure (`sbp`)
 -   Total cholesterol (`totalcholesterol`)
 -   Triglycerides (`triglyceride`)
--   Weight (weight; `weight`)
+-   Weight (adults only; `weight`)
 
 Example:
 
@@ -37,11 +41,11 @@ clean_sbp <- raw_sbp %>%
   clean_biomarker_units("sbp")
 ```
 
+&nbsp;
+
 ### Cardiovascular risk score functions
 
-Functions for calculating the following cardiovascular risk scores are
-included in this package, and can be used on local data (loaded into R)
-or data stored in MySQL:
+Functions for calculating the following cardiovascular risk scores are included in this package, and can be used on local data (loaded into R) or data stored in MySQL. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
 
 -   QRISK2-2017
 
@@ -65,3 +69,29 @@ results <- dataframe %>%
                     type1 = type1_var,
                     type2 = type2_var,
                     surv = surv_var)
+```  
+
+&nbsp;
+
+-   QDiabetes-Heart Failure 2015
+
+Example:
+
+``` r
+results <- dataframe %>%
+  calculate_qdiabeteshf(age = age_var
+                        sex = sex_var,
+                        ethrisk = ethrisk_var,
+                        town = town_var,
+                        smoking = smoking_var,
+                        duration = diabetes_duration_var,
+                        renal = renal_var,
+                        af = af_var,
+                        cvd = cvd_var,
+                        hba1c = hba1c_var,
+                        cholhdl = cholhdl_var,
+                        sbp = sbp_var,
+                        bmi = bmi_var,
+                        type1 = type1_var,
+                        surv = surv_var)
+```
