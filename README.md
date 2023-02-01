@@ -52,7 +52,7 @@ Example:
 
 ``` r
 clean_egfr_medcodes <- clean_creatinine_blood_medcodes %>%
-  ckd_epi_2021_egfr(creatinine=testvalue, sex=sex, age_at_creatinine=age_at_creat) %>%
+  ckd_epi_2021_egfr(creatinine=testvalue, sex=sex, age_at_creatinine=age_at_creat)
 ```  
 
 &nbsp;
