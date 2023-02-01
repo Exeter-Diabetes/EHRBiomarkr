@@ -6,9 +6,9 @@ This package has various functions for cleaning and prcoessing biomarkers in EHR
 
 Two functions for cleaning biomarker values are included in this package, and can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
 
-`clean_biomarker_values` removes values outside of plausible limits (limits found in data/biomarkerAcceptableLimits.rda, also in our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). See man/biomarkerAcceptableLimits.Rd for details of how these were ascertained.
+`clean_biomarker_values` removes values outside of plausible limits (limits found in data/biomarkerAcceptableLimits.rda or by typing `biomarkerAcceptableLimits' with the package loaded, also in our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). See man/biomarkerAcceptableLimits.Rd (or `?biomarkerAcceptableLimits` with the package loaded) for details of how these were ascertained.
 
-`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (appropriate unit codes found in data/biomarkerAcceptableUnits.rda, also in our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). See man/biomarkerAcceptableUnits.Rd for details of how these were ascertained.
+`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (appropriate unit codes found in data/biomarkerAcceptableUnits.rda or by typing `biomarkerAcceptableUnits' with the package loaded, also in our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). See man/biomarkerAcceptableUnits.Rd (or `?biomarkerAcceptableUnits` with the package loaded) for details of how these were ascertained.
 
 These functions can be applied to the following biomarkers:
 
