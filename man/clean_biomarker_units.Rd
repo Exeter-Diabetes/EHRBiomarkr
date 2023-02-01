@@ -7,11 +7,11 @@
 clean_biomarker_units(dataset, numunitid_col, biomrkr)
 }
 \arguments{
-\item{dataset}{- dataset containing biomarker observations}
+\item{dataset}{dataset containing biomarker observations}
 
-\item{numunitid_col}{- name of column containing numunitid codes}
+\item{numunitid_col}{name of column containing numunitid codes}
 
-\item{biomrkr}{- name of biomarker to clean (acr/alt/ast/bmi/creatinine/dbp/fastingglucose/hba1c/hdl/height/ldl/pcr/sbp/smoking (for QRISK2)/totalcholesterol/triglyceride/weight)}
+\item{biomrkr}{name of biomarker to clean (acr/albumin_blood/alt/ast/bilirubin/bmi/creatinine_blood/dbp/fastingglucose/haemotocrit/haemoglobin/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)}
 }
 \description{
 only keep measurements with 'acceptable' unit codes (numunitid) for specified biomarker

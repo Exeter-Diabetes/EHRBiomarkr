@@ -25,39 +25,39 @@ calculate_qrisk2(
 )
 }
 \arguments{
-\item{dataframe}{- dataframe containing QRISK2 variables}
+\item{dataframe}{dataframe containing QRISK2 variables}
 
-\item{sex}{- "male" or "female"}
+\item{sex}{"male" or "female"}
 
-\item{age}{- current age in years}
+\item{age}{current age in years}
 
-\item{ethrisk}{- QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group}
+\item{ethrisk}{QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group}
 
-\item{town}{- Townsend Deprivation Index (default 0 i.e. missing)}
+\item{town}{Townsend Deprivation Index (default 0 i.e. missing)}
 
-\item{smoking}{- QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker}
+\item{smoking}{QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker}
 
-\item{type1}{- Type 1 diabetes (binary)}
+\item{type1}{Type 1 diabetes (binary)}
 
-\item{type2}{- Type 2 diabetes (binary)}
+\item{type2}{Type 2 diabetes (binary)}
 
-\item{fh_cvd}{- family history of premature cardiovascular disease}
+\item{fh_cvd}{family history of premature cardiovascular disease}
 
-\item{renal}{- CKD stage 4 or 5}
+\item{renal}{CKD stage 4 or 5}
 
-\item{af}{- atrial fibrillation (binary)}
+\item{af}{atrial fibrillation (binary)}
 
-\item{bp_med}{- on blood pressure medication (binary)}
+\item{bp_med}{on blood pressure medication (binary)}
 
-\item{rheumatoid_arth}{- rheumatoid arthritis (binary)}
+\item{rheumatoid_arth}{rheumatoid arthritis (binary)}
 
-\item{cholhdl}{- cholesterol:HDL ratio}
+\item{cholhdl}{cholesterol:HDL ratio}
 
-\item{sbp}{- systolic blood pressure in mmHg}
+\item{sbp}{systolic blood pressure in mmHg}
 
-\item{bmi}{- BMI in kg/m2}
+\item{bmi}{BMI in kg/m2}
 
-\item{surv}{- how many years survival to use in model (default 10)}
+\item{surv}{how many years survival to use in model (default 10)}
 }
 \description{
 calculates QRISK2-2017 score

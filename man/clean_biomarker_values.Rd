@@ -7,11 +7,11 @@
 clean_biomarker_values(dataset, biomrkr_col, biomrkr)
 }
 \arguments{
-\item{dataset}{- dataset containing biomarker observations}
+\item{dataset}{dataset containing biomarker observations}
 
-\item{biomrkr_col}{- name of column containing biomarker values}
+\item{biomrkr_col}{name of column containing biomarker values}
 
-\item{biomrkr}{- name of biomarker to clean (acr/alt/ast/bmi/creatinine/dbp/fastingglucose/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)}
+\item{biomrkr}{name of biomarker to clean (acr/albumin_blood/alt/ast/bilirubin/bmi/creatinine_blood/dbp/fastingglucose/haemotocrit/haemoglobin/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)}
 }
 \description{
 only keep measurements within acceptable limits for specified biomarker

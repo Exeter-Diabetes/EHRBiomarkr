@@ -24,37 +24,37 @@ calculate_qdiabeteshf(
 )
 }
 \arguments{
-\item{dataframe}{- dataframe containing QDiabetes-HF variables}
+\item{dataframe}{dataframe containing QDiabetes-HF variables}
 
-\item{sex}{- "male" or "female"}
+\item{sex}{"male" or "female"}
 
-\item{age}{- current age in years}
+\item{age}{current age in years}
 
-\item{ethrisk}{- QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group}
+\item{ethrisk}{QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group}
 
-\item{town}{- Townsend Deprivation Index (default 0 i.e. missing)}
+\item{town}{Townsend Deprivation Index (default 0 i.e. missing)}
 
-\item{smoking}{- QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker}
+\item{smoking}{QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker}
 
-\item{duration}{- diabetes duration: 0=within the last year, 1=1-3 years, 2=4-6 years, 3=7-10 years, 4=11 or more}
+\item{duration}{diabetes duration: 0=within the last year, 1=1-3 years, 2=4-6 years, 3=7-10 years, 4=11 or more}
 
-\item{type1}{- Type 1 diabetes (binary) - otherwise Type 2 assumed}
+\item{type1}{Type 1 diabetes (binary) otherwise Type 2 assumed}
 
-\item{cvd}{- history of angina, heart attack or stroke}
+\item{cvd}{history of angina, heart attack or stroke}
 
-\item{af}{- atrial fibrillation (binary)}
+\item{af}{atrial fibrillation (binary)}
 
-\item{renal}{- CKD stage 4 or 5}
+\item{renal}{CKD stage 4 or 5}
 
-\item{hba1c}{- last HbA1c in mmol/mol}
+\item{hba1c}{last HbA1c in mmol/mol}
 
-\item{cholhdl}{- cholesterol:HDL ratio}
+\item{cholhdl}{cholesterol:HDL ratio}
 
-\item{sbp}{- systolic blood pressure in mmHg}
+\item{sbp}{systolic blood pressure in mmHg}
 
-\item{bmi}{- BMI in kg/m2}
+\item{bmi}{BMI in kg/m2}
 
-\item{surv}{- how many years survival to use in model (default 10)}
+\item{survhow}{many years survival to use in model (default 10)}
 }
 \description{
 calculates QDiabetes-HF 2015 score

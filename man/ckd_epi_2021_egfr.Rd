@@ -7,13 +7,13 @@
 ckd_epi_2021_egfr(dataset, creatinine_col, sex_col, age_at_creatinine_col)
 }
 \arguments{
-\item{dataset}{- dataset containing creatinine, sex, and age at creatinine reading}
+\item{dataset}{dataset containing creatinine, sex, and age at creatinine reading}
 
-\item{creatinine_col}{- column with creatinine reading in umol/L}
+\item{creatinine_col}{column with creatinine reading in umol/L}
 
-\item{sex_col}{- column with sex: "male" or "female"}
+\item{sex_col}{column with sex: "male" or "female"}
 
-\item{age_at_creatinine_col}{- column with age at creatinine reading in years}
+\item{age_at_creatinine_col}{column with age at creatinine reading in years}
 }
 \description{
 see above
