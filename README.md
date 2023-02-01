@@ -6,9 +6,9 @@ This package has various functions for cleaning and prcoessing biomarkers in EHR
 
 Two functions for cleaning biomarker values are included in this package:
 
-`clean_biomarker_values` removes values outside of plausible limits (run `biomarkerAcceptableLimits` to see limits, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). Run `?biomarkerAcceptableLimits` for details of how these were ascertained. NB: biomarkers with more than one-commonly used unit must be converted to standard units (haematocrit: proportion between 0 and 1, haemoglobin: g/L, HbA1c: mmol/L).
+`clean_biomarker_values` removes values outside of plausible limits (run `biomarkerAcceptableLimits` to see limits, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). Run `?biomarkerAcceptableLimits` for details of how these were ascertained and further explanation of variables. NB: biomarkers with more than one-commonly used unit must be converted to standard units (haematocrit: proportion between 0 and 1, haemoglobin: g/L, HbA1c: mmol/L).
 
-`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (run `biomarkerAcceptableLimits` to see appropriate unit codes, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). Run `?biomarkerAcceptableUnits` for details of how these were ascertained.
+`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (run `biomarkerAcceptableLimits` to see appropriate unit codes, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). Run `?biomarkerAcceptableUnits` for details of how these were ascertained and further explanation of variables.
 
 These functions can be applied to the following biomarkers:
 
