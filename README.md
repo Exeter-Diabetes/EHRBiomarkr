@@ -41,9 +41,11 @@ clean_sbp <- raw_sbp %>%
   clean_biomarker_units("sbp")
 ```
 
+&nbsp;
+
 ### Cardiovascular risk score functions
 
-Functions for calculating the following cardiovascular risk scores are included in this package, and can be used on local data (loaded into R) or data stored in MySQL:
+Functions for calculating the following cardiovascular risk scores are included in this package, and can be used on local data (loaded into R) or data stored in MySQL. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
 
 -   QRISK2-2017
 
@@ -68,7 +70,9 @@ results <- dataframe %>%
                     type2 = type2_var,
                     surv = surv_var)
 ```  
-                    
+
+&nbsp;
+
 -   QDiabetes-Heart Failure 2015
 
 Example:
@@ -91,4 +95,3 @@ results <- dataframe %>%
                         type1 = type1_var,
                         surv = surv_var)
 ```
-NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions.
