@@ -1,18 +1,18 @@
 #' Impute missing predictors for QRISK2 and QDiabetes-HF
 #' 
 #' @description impute BMI, SBP and chol_HDL ratio where missing for QRISK2-2017 and QDiabetes-HF-2015
-#' @param new_dataframe - dataframe containing variables for Q model
-#' @param sex_col - column with "male" or "female"
-#' @param age_col - column with current age in years
-#' @param ethrisk_col - column with QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
-#' @param smoking_col - column with QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
-#' @param type1_col - column with Type 1 diabetes (binary)
-#' @param type2_col - column with Type 2 diabetes (binary)
-#' @param bp_med_col - column with whether on blood pressure medication (binary)
-#' @param cholhdl_col - column with cholesterol:HDL ratio
-#' @param sbp_col - column with systolic blood pressure in mmHg
-#' @param bmi_col - column with BMI in kg/m2
-#' @param cvd_col - column with history of angina, heart attack or stroke (binary)
+#' @param new_dataframe dataframe containing variables for Q model
+#' @param sex_col column with "male" or "female"
+#' @param age_col column with current age in years
+#' @param ethrisk_col column with QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
+#' @param smoking_col column with QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
+#' @param type1_col column with Type 1 diabetes (binary)
+#' @param type2_col column with Type 2 diabetes (binary)
+#' @param bp_med_col column with whether on blood pressure medication (binary)
+#' @param cholhdl_col column with cholesterol:HDL ratio
+#' @param sbp_col column with systolic blood pressure in mmHg
+#' @param bmi_col column with BMI in kg/m2
+#' @param cvd_col column with history of angina, heart attack or stroke (binary)
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number
@@ -118,23 +118,23 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
 #' Calculate QRISK2-2017
 #'
 #' @description calculates QRISK2-2017 score
-#' @param dataframe - dataframe containing QRISK2 variables
-#' @param sex - "male" or "female"
-#' @param age - current age in years
-#' @param ethrisk - QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
-#' @param town - Townsend Deprivation Index (default 0 i.e. missing)
-#' @param smoking - QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
-#' @param type1 - Type 1 diabetes (binary)
-#' @param type2 - Type 2 diabetes (binary)
-#' @param fh_cvd - family history of premature cardiovascular disease
-#' @param renal - CKD stage 4 or 5
-#' @param af - atrial fibrillation (binary)
-#' @param bp_med - on blood pressure medication (binary)
-#' @param rheumatoid_arth - rheumatoid arthritis (binary)
-#' @param cholhdl - cholesterol:HDL ratio
-#' @param sbp - systolic blood pressure in mmHg
-#' @param bmi - BMI in kg/m2
-#' @param surv - how many years survival to use in model (default 10)
+#' @param dataframe dataframe containing QRISK2 variables
+#' @param sex "male" or "female"
+#' @param age current age in years
+#' @param ethrisk QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
+#' @param town Townsend Deprivation Index (default 0 i.e. missing)
+#' @param smoking QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
+#' @param type1 Type 1 diabetes (binary)
+#' @param type2 Type 2 diabetes (binary)
+#' @param fh_cvd family history of premature cardiovascular disease
+#' @param renal CKD stage 4 or 5
+#' @param af atrial fibrillation (binary)
+#' @param bp_med on blood pressure medication (binary)
+#' @param rheumatoid_arth rheumatoid arthritis (binary)
+#' @param cholhdl cholesterol:HDL ratio
+#' @param sbp systolic blood pressure in mmHg
+#' @param bmi BMI in kg/m2
+#' @param surv how many years survival to use in model (default 10)
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number
@@ -349,22 +349,22 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
 #' Calculate QDiabetes-HF 2015
 #' 
 #' @description calculates QDiabetes-HF 2015 score
-#' @param dataframe - dataframe containing QDiabetes-HF variables
-#' @param sex - "male" or "female"
-#' @param age - current age in years
-#' @param ethrisk - QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
-#' @param town - Townsend Deprivation Index (default 0 i.e. missing)
-#' @param smoking - QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
-#' @param duration - diabetes duration: 0=within the last year, 1=1-3 years, 2=4-6 years, 3=7-10 years, 4=11 or more
-#' @param type1 - Type 1 diabetes (binary) - otherwise Type 2 assumed
-#' @param cvd - history of angina, heart attack or stroke
-#' @param af - atrial fibrillation (binary)
-#' @param renal - CKD stage 4 or 5
-#' @param hba1c - last HbA1c in mmol/mol
-#' @param cholhdl - cholesterol:HDL ratio
-#' @param sbp - systolic blood pressure in mmHg
-#' @param bmi - BMI in kg/m2
-#' @param surv - how many years survival to use in model (default 10)
+#' @param dataframe dataframe containing QDiabetes-HF variables
+#' @param sex "male" or "female"
+#' @param age current age in years
+#' @param ethrisk QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
+#' @param town Townsend Deprivation Index (default 0 i.e. missing)
+#' @param smoking QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
+#' @param duration diabetes duration: 0=within the last year, 1=1-3 years, 2=4-6 years, 3=7-10 years, 4=11 or more
+#' @param type1 Type 1 diabetes (binary) otherwise Type 2 assumed
+#' @param cvd history of angina, heart attack or stroke
+#' @param af atrial fibrillation (binary)
+#' @param renal CKD stage 4 or 5
+#' @param hba1c last HbA1c in mmol/mol
+#' @param cholhdl cholesterol:HDL ratio
+#' @param sbp systolic blood pressure in mmHg
+#' @param bmi BMI in kg/m2
+#' @param survhow many years survival to use in model (default 10)
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number

@@ -2,10 +2,10 @@
 #' Calculates eGFR from creatinine, sex and age at creatinine reading using 2021 CKD-EPI Creatinine (https://www.mdcalc.com/calc/3939/ckd-epi-equations-glomerular-filtration-rate-gfr#evidence)
 #' 
 #' @description see above
-#' @param dataset - dataset containing creatinine, sex, and age at creatinine reading
-#' @param creatinine_col - column with creatinine reading in umol/L
-#' @param sex_col - column with sex: "male" or "female"
-#' @param age_at_creatinine_col - column with age at creatinine reading in years
+#' @param dataset dataset containing creatinine, sex, and age at creatinine reading
+#' @param creatinine_col column with creatinine reading in umol/L
+#' @param sex_col column with sex: "male" or "female"
+#' @param age_at_creatinine_col column with age at creatinine reading in years
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select

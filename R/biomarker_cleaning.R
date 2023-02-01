@@ -1,9 +1,9 @@
 #' Clean biomarker units: only keep values with acceptable unit codes (includes missing unit code for all)
 #' 
 #' @description only keep measurements with 'acceptable' unit codes (numunitid) for specified biomarker
-#' @param dataset - dataset containing biomarker observations
-#' @param numunitid_col - name of column containing numunitid codes
-#' @param biomrkr - name of biomarker to clean (acr/alt/ast/bmi/creatinine/dbp/fastingglucose/hba1c/hdl/height/ldl/pcr/sbp/smoking (for QRISK2)/totalcholesterol/triglyceride/weight)
+#' @param dataset dataset containing biomarker observations
+#' @param numunitid_col name of column containing numunitid codes
+#' @param biomrkr name of biomarker to clean (acr/albumin_blood/alt/ast/bilirubin/bmi/creatinine_blood/dbp/fastingglucose/haemotocrit/haemoglobin/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)
 #' @importFrom magrittr %>%
 #' @importFrom stats setNames
 #' @export
@@ -27,9 +27,9 @@ clean_biomarker_units = function(dataset, numunitid_col, biomrkr) {
 #' Clean biomarker values: only keep values within acceptable limits
 #' 
 #' @description only keep measurements within acceptable limits for specified biomarker
-#' @param dataset - dataset containing biomarker observations
-#' @param biomrkr_col - name of column containing biomarker values
-#' @param biomrkr - name of biomarker to clean (acr/alt/ast/bmi/creatinine/dbp/fastingglucose/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)
+#' @param dataset dataset containing biomarker observations
+#' @param biomrkr_col name of column containing biomarker values
+#' @param biomrkr name of biomarker to clean (acr/albumin_blood/alt/ast/bilirubin/bmi/creatinine_blood/dbp/fastingglucose/haemotocrit/haemoglobin/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)
 #' @importFrom magrittr %>%
 #' @export
 
