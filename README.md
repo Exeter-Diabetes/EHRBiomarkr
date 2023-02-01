@@ -1,14 +1,14 @@
 # EHRBiomarkr
 
-This package has various functions for cleaning and prcoessing biomarkers in EHR, especially in CPRD Aurum.
+This package has various functions for cleaning and prcoessing biomarkers in EHR, especially in CPRD Aurum. All functions can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
 
-### Biomarker functions
+## Biomarker cleaning functions
 
-Two functions for cleaning biomarker values are included in this package, and can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
+Two functions for cleaning biomarker values are included in this package:
 
-`clean_biomarker_values` removes values outside of plausible limits (run `biomarkerAcceptableLimits` to see limits, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). Run `?biomarkerAcceptableLimits` for details of how these were ascertained.
+`clean_biomarker_values` removes values outside of plausible limits (run `biomarkerAcceptableLimits` to see limits, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_limits.txt) repository). Run `?biomarkerAcceptableLimits` for details of how these were ascertained and further explanation of variables. NB: biomarkers with more than one-commonly used unit must be converted to standard units (haematocrit: proportion between 0 and 1, haemoglobin: g/L, HbA1c: mmol/L).
 
-`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (run `biomarkerAcceptableLimits` to see appropriate unit codes, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). Run `?biomarkerAcceptableUnits` for details of how these were ascertained.
+`clean_biomarker_units` retains only values with appropriate unit codes (numunitid) or missing unit code in CPRD Aurum (run `biomarkerAcceptableLimits` to see appropriate unit codes, also our [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists/blob/main/Biomarkers/biomarker_acceptable_units.txt) repository). Run `?biomarkerAcceptableUnits` for details of how these were ascertained and further explanation of variables.
 
 These functions can be applied to the following biomarkers:
 
@@ -37,17 +37,31 @@ Example:
 
 ``` r
 clean_sbp <- raw_sbp %>%
-  clean_biomarker_values("sbp") %>%
-  clean_biomarker_units("sbp")
+  clean_biomarker_values(biomrkr_col=testvalue, biomrkr="sbp") %>%
+  clean_biomarker_units(numunitid_col=numunitid, biomrkr="sbp")
 ```
+Further info on how we implement these functions as part of a CPRD Aurum processing pipeline can be found here: [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists#biomarker-algorithms).
 
 &nbsp;
 
-### Cardiovascular risk score functions
+## eGFR from creatinine, age and sex using CKD-EPI Creatinine Equation (2021)
 
-Functions for calculating the following cardiovascular risk scores are included in this package, and can be used on local data (loaded into R) or data stored in MySQL. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
+This function implements the [CKD-EPI Creatinine Equation (2021)](https://www.kidney.org/professionals/kdoqi/gfr_calculator/formula) equation to calculate eGFR from creatinine, age and sex. See help (`?ckd_epi_2021_egfr`) for further explanation of variables. 
 
--   QRISK2-2017
+Example:
+
+``` r
+clean_egfr_medcodes <- clean_creatinine_blood_medcodes %>%
+  ckd_epi_2021_egfr(creatinine=testvalue, sex=sex, age_at_creatinine=age_at_creat)
+```  
+
+&nbsp;
+
+## Cardiovascular risk score functions
+
+Functions for calculating the following QRISK2 (2017) and QDiabetes-Heart Failure (2015) are included in this package. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
+
+### QRISK2 (2017)
 
 Example:
 
@@ -73,7 +87,7 @@ results <- dataframe %>%
 
 &nbsp;
 
--   QDiabetes-Heart Failure 2015
+### QDiabetes-Heart Failure (2015)
 
 Example:
 
