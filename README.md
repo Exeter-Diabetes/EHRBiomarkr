@@ -37,8 +37,8 @@ Example:
 
 ``` r
 clean_sbp <- raw_sbp %>%
-  clean_biomarker_values(sbp_var, "sbp") %>%
-  clean_biomarker_units(numunitid, "sbp")
+  clean_biomarker_values(biomrkr_col=testvalue, biomrkr="sbp") %>%
+  clean_biomarker_units(numunitid_col=numunitid, biomrkr="sbp")
 ```
 Further info on how we implement these functions as part of a CPRD Aurum processing pipeline can be found here: [CPRD-Codelists](https://github.com/Exeter-Diabetes/CPRD-Codelists#biomarker-algorithms).
 
