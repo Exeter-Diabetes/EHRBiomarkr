@@ -67,7 +67,7 @@ results <- dataframe %>%
                     type1 = type1_var,
                     type2 = type2_var,
                     surv = surv_var)
-                    
+```  
                     
 -   QDiabetes-Heart Failure 2015
 
@@ -75,19 +75,20 @@ Example:
 
 ``` r
 results <- dataframe %>%
-  calculate_qrisk2(age = age_var,
-                    sex = sex_var,
-                    ethrisk = ethrisk_var,
-                    town = town_var,
-                    smoking = smoking_var,
-                    fh_cvd = fh_cvd_var,
-                    renal = renal_var,
-                    af = af_var,
-                    rheumatoid_arth=rheumatoid_arth_var,
-                    bp_med = bp_med_var,
-                    cholhdl = cholhdl_var,
-                    sbp = sbp_var,
-                    bmi = bmi_var,
-                    type1 = type1_var,
-                    type2 = type2_var,
-                    surv = surv_var)
+  calculate_qdiabeteshf(age = age_var
+                        sex = sex_var,
+                        ethrisk = ethrisk_var,
+                        town = town_var,
+                        smoking = smoking_var,
+                        duration = diabetes_duration_var,
+                        renal = renal_var,
+                        af = af_var,
+                        cvd = cvd_var,
+                        hba1c = hba1c_var,
+                        cholhdl = cholhdl_var,
+                        sbp = sbp_var,
+                        bmi = bmi_var,
+                        type1 = type1_var,
+                        surv = surv_var)
+```
+NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions.
