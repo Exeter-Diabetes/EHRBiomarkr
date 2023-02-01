@@ -13,8 +13,8 @@ Two functions for cleaning biomarker values are included in this package, and ca
 These functions can be applied to the following biomarkers:
 
 -   Albumin-creatinine ratio (`acr`)
--   Alanine aminotransferase (`alt`)
 -   (Blood) albumin (`albumin_blood`)
+-   Alanine aminotransferase (`alt`)
 -   Aspartate aminotransferase(`ast`)
 -   Bilirubin (`bilirubin`)
 -   BMI (adults only; `bmi`)
