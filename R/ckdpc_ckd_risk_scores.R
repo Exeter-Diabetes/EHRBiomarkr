@@ -1,6 +1,6 @@
-#' Calculate CKDPC risk score for 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (ckdpc_risk; total and confirmed events) from Nelson RG, Grams ME, Ballew SH. Development of Risk Prediction Equations for Incident Chronic Kidney Disease. JAMA. doi:10.1001/jama.2019.17379 (https://jamanetwork.com/journals/jama/fullarticle/2755299).
+#' Calculate CKDPC risk score for 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (ckdpc_egfr60_risk; total and confirmed events) from Nelson RG, Grams ME, Ballew SH. Development of Risk Prediction Equations for Incident Chronic Kidney Disease. JAMA. doi:10.1001/jama.2019.17379 (https://jamanetwork.com/journals/jama/fullarticle/2755299).
 
-#' @description calculate 5-year absolute risk of eGFR<60 in people with diabetes (total and confirmed events)
+#' @description calculate 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (total and confirmed events)
 #' @param dataframe dataframe containing variables for risk score
 #' @param age current age in years
 #' @param sex sex: "male" or "female"
@@ -22,7 +22,7 @@
 #' @importFrom dplyr bind_cols
 #' @export
 
-calculate_ckdpc_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr) {
+calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr) {
   
 
   # Get handles for columns
@@ -51,7 +51,7 @@ calculate_ckdpc_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c
   
   
   # Fetch constants from package
-  ckdpc_risk_vars <- data.frame(unlist(lapply(EHRBiomarkr::ckdpcRiskConstants, function(y) lapply(y, as.numeric)), recursive="FALSE"))
+  ckdpc_risk_vars <- data.frame(unlist(lapply(EHRBiomarkr::ckdpcEgfr60RiskConstants, function(y) lapply(y, as.numeric)), recursive="FALSE"))
   
   
   # Join constants to data table
