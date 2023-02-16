@@ -126,7 +126,7 @@ is.integer64 <- function(x){
 
 example_dataset <- example_dataset %>% mutate_if(is.integer64, as.integer)
 
-extra_vars <- data.frame(insulin=sample(c(0,1), replace=TRUE, size=100), oha=sample(c(0,1), replace=TRUE, size=100), hypertension=sample(c(0,1), replace=TRUE, size=100))
+extra_vars <- data.frame(insulin=sample(c(0,1), replace=TRUE, size=100), oha=sample(c(0,1), replace=TRUE, size=100), hypertension=sample(c(0,1), replace=TRUE, size=100), preegfr=sample(c(65:90), replace=TRUE, size=100), preacr=sample(c(5:500), replace=TRUE, size=100))
 
 example_dataset <- example_dataset %>% bind_cols(extra_vars)
 
