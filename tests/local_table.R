@@ -109,3 +109,45 @@ qdhf_and_qrisk2 %>% glimpse()
 # Looks good
 qdhf_and_qrisk2 %>% count()
 #100
+
+
+
+## CKDPC risk score
+
+analysis = cprd$analysis("mm")
+
+example_dataset <- example_dataset %>% analysis$cached("20230116_t2d_1stinstance_interim_2")
+
+example_dataset <- collect(example_dataset %>% head(100) %>% mutate(patid=as.character(patid)))
+
+is.integer64 <- function(x){
+  class(x)=="integer64"
+}
+
+example_dataset <- example_dataset %>% mutate_if(is.integer64, as.integer)
+
+extra_vars <- data.frame(insulin=sample(c(0,1), replace=TRUE, size=100), oha=sample(c(0,1), replace=TRUE, size=100), hypertension=sample(c(0,1), replace=TRUE, size=100))
+
+example_dataset <- example_dataset %>% bind_cols(extra_vars)
+
+ckdpc_risk <- example_dataset %>%
+  
+  mutate(sex2=ifelse(sex=="male", "male", ifelse(sex=="female", "female", NA)),
+         black_eth=ifelse(ethnicity_qrisk2==6 | ethnicity_qrisk2==7, 1, 0),
+         ever_smoker=ifelse(qrisk2_smoking_cat==0, 1, 0)) %>%
+  
+  calculate_ckdpc_risk(age=dstartdate_age, sex=sex2, black_eth=black_eth, egfr=preegfr, cvd=cvd, hba1c=prehba1c, insulin=insulin, oha=oha, ever_smoker=ever_smoker, hypertension=hypertension, bmi=prebmi, acr=preacr)
+
+
+qdhf_and_qrisk2 %>% glimpse()
+# Looks good
+qdhf_and_qrisk2 %>% count()
+#100
+
+
+
+
+
+
+
+
