@@ -1,6 +1,6 @@
 Package: EHRBiomarkr
 Title: Clean biomarker test results in EHR
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     person(given = "Katie",
            family = "Young",

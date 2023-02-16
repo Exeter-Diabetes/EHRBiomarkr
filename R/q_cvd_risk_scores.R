@@ -2,17 +2,17 @@
 #' 
 #' @description impute BMI, SBP and chol_HDL ratio where missing for QRISK2-2017 and QDiabetes-HF-2015
 #' @param new_dataframe dataframe containing variables for Q model
-#' @param sex_col column with "male" or "female"
-#' @param age_col column with current age in years
-#' @param ethrisk_col column with QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
-#' @param smoking_col column with QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
-#' @param type1_col column with Type 1 diabetes (binary)
-#' @param type2_col column with Type 2 diabetes (binary)
-#' @param bp_med_col column with whether on blood pressure medication (binary)
-#' @param cholhdl_col column with cholesterol:HDL ratio
-#' @param sbp_col column with systolic blood pressure in mmHg
-#' @param bmi_col column with BMI in kg/m2
-#' @param cvd_col column with history of angina, heart attack or stroke (binary)
+#' @param sex_col "male" or "female"
+#' @param age_col current age in years
+#' @param ethrisk_col QRISK2 ethnicity category: 0=Missing, 1=White, 2=Indian, 3=Pakistani, 4=Bangladeshi, 5=Other Asian, 6=Black Caribbean, 7=Black African, 8=Chinese, 9=Other ethnic group
+#' @param smoking_col QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
+#' @param type1_col Type 1 diabetes (binary)
+#' @param type2_col Type 2 diabetes (binary)
+#' @param bp_med_col whether on blood pressure medication (binary)
+#' @param cholhdl_col  holesterol:HDL ratio
+#' @param sbp_col systolic blood pressure in mmHg
+#' @param bmi_col BMI in kg/m2
+#' @param cvd_col history of angina, heart attack or stroke (binary)
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number
@@ -146,7 +146,7 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
 calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, type1, type2, fh_cvd, renal, af, bp_med, rheumatoid_arth, cholhdl, sbp, bmi, surv=NULL) {
   
   
-  # Get handles for columns with values in in data table
+  # Get handles for columns with values in data table
   sex_col <- as.symbol(deparse(substitute(sex)))
   age_col <- as.symbol(deparse(substitute(age)))
   ethrisk_col <- as.symbol(deparse(substitute(ethrisk)))
@@ -377,7 +377,7 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
 calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smoking, duration, type1, cvd, af, renal, hba1c, cholhdl, sbp, bmi, surv=NULL) {
   
   
-  # Get handles for columns with values in in data table
+  # Get handles for columns with values in data table
   sex_col <- as.symbol(deparse(substitute(sex)))
   age_col <- as.symbol(deparse(substitute(age)))
   ethrisk_col <- as.symbol(deparse(substitute(ethrisk)))

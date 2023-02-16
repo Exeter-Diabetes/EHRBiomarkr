@@ -12,6 +12,7 @@ biomarkerAcceptableUnits = yaml::read_yaml(here::here("data-raw/biomarker_accept
 qMissingPredictors = yaml::read_yaml(here::here("data-raw/q_missing_predictors.yaml"))
 qrisk2Constants = yaml::read_yaml(here::here("data-raw/qrisk2_constants.yaml"))
 qdiabeteshfConstants = yaml::read_yaml(here::here("data-raw/qdiabeteshf_constants.yaml"))
+ckdpcRiskConstants = yaml::read_yaml(here::here("data-raw/ckdpc_risk_constants.yaml"))
 
 # Output Rda files
 usethis::use_data(biomarkerAcceptableLimits, overwrite = TRUE)
@@ -19,3 +20,4 @@ usethis::use_data(biomarkerAcceptableUnits, overwrite = TRUE)
 usethis::use_data(qMissingPredictors, overwrite = TRUE)
 usethis::use_data(qrisk2Constants, overwrite = TRUE)
 usethis::use_data(qdiabeteshfConstants, overwrite = TRUE)
+usethis::use_data(ckdpcRiskConstants, overwrite = TRUE)

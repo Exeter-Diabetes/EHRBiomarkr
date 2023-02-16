@@ -36,3 +36,11 @@
 #' 
 #' @docType data
 "qMissingPredictors"
+
+
+#' CKDPC risk score constants
+#'
+#' Constants required for to calculate 5-year CKDPC risk score for eGFR<60ml/min/1.73m2 (total and confirmed events) in people with diabetes. Source: Nelson RG, Grams ME, Ballew SH. Development of Risk Prediction Equations for Incident Chronic Kidney Disease. JAMA. doi:10.1001/jama.2019.17379 (https://jamanetwork.com/journals/jama/fullarticle/2755299).
+#' 
+#' @docType data
+"ckdpcRiskConstants"
