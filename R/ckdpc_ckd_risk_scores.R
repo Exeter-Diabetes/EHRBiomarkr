@@ -70,64 +70,43 @@ calculate_ckdpc_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c
            no_dm_med=ifelse(insulin_col==0 & oha_col==0, 1L, 0L),
            
            ckdpc_risk_total_lin_predictor=
-               exp(exp_cons_total +
-                     (age_cons * ((!!age_col/5) - 11)) +  
-                     (female_cons * female_sex) +
-                     (black_eth_cons * !!black_eth_col) +
-                     (egfr_cons1 * (15 - (min(!!egfr_col, 90)/5))) +
-                     (-(egfr_cons2 * (max(0, !!egfr_col-90))/5)) +
-                     (cvd_cons * !!cvd_col) +
-                     (hba1c_cons * (!!hba1c_col-7)) +
-                     (insulin_cons * !!insulin_col) +
-                     (-(no_dm_med_cons * no_dm_med)) +
-                     (hba1c_insulin_cons * (!!hba1c_col-7) * !!insulin_col) +
-                     (hba1c_no_dm_med_cons * (!!hba1c_col-7) * no_dm_med) +
-                     (-(ever_smoker_cons * !!ever_smoker_col)) +
-                     (hypertension_cons * !!hypertension_col) +
-                     (bmi_cons * ((!!bmi_col/5)-5.4)) +
-                     (acr_cons * (log(!!acr_col, base=10) - 1))
-               ),
+             exp_cons_total +
+             (age_cons * ((!!age_col/5) - 11)) +  
+             (female_cons * female_sex) +
+             (black_eth_cons * !!black_eth_col) +
+             (egfr_cons1 * (15 - (min(!!egfr_col, 90)/5))) +
+             (-(egfr_cons2 * (max(0, !!egfr_col-90))/5)) +
+             (cvd_cons * !!cvd_col) +
+             (hba1c_cons * (!!hba1c_col-7)) +
+             (insulin_cons * !!insulin_col) +
+             (-(no_dm_med_cons * no_dm_med)) +
+             (hba1c_insulin_cons * (!!hba1c_col-7) * !!insulin_col) +
+             (hba1c_no_dm_med_cons * (!!hba1c_col-7) * no_dm_med) +
+             (-(ever_smoker_cons * !!ever_smoker_col)) +
+             (hypertension_cons * !!hypertension_col) +
+             (bmi_cons * ((!!bmi_col/5)-5.4)) +
+             (acr_cons * (log(!!acr_col, base=10) - 1)),
            
            ckdpc_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_risk_total_lin_predictor))),
            
            ckdpc_risk_confirmed_lin_predictor=
-             exp(exp_cons_confirmed +
-                     (age_cons * ((!!age_col/5) - 11)) +  
-                     (female_cons * female_sex) +
-                     (black_eth_cons * !!black_eth_col) +
-                     (egfr_cons1 * (15 - (min(!!egfr_col, 90)/5))) +
-                     (-(egfr_cons2 * (max(0, !!egfr_col-90))/5)) +
-                     (cvd_cons * !!cvd_col) +
-                     (hba1c_cons * (!!hba1c_col-7)) +
-                     (insulin_cons * !!insulin_col) +
-                     (-(no_dm_med_cons * no_dm_med)) +
-                     (hba1c_insulin_cons * (!!hba1c_col-7) * !!insulin_col) +
-                     (hba1c_no_dm_med_cons * (!!hba1c_col-7) * no_dm_med) +
-                     (-(ever_smoker_cons * !!ever_smoker_col)) +
-                     (hypertension_cons * !!hypertension_col) +
-                     (bmi_cons * ((!!bmi_col/5)-5.4)) +
-                     (acr_cons * (log(!!acr_col, base=10) - 1))
-               ),
-           
-           ckdpc_risk_confirmed_score2=
-             1 - exp(-5^0.9766551 * exp(exp_cons_confirmed +
-                   (age_cons * ((!!age_col/5) - 11)) +  
-                   (female_cons * female_sex) +
-                   (black_eth_cons * !!black_eth_col) +
-                   (egfr_cons1 * (15 - (min(!!egfr_col, 90)/5))) +
-                   (-(egfr_cons2 * (max(0, !!egfr_col-90))/5)) +
-                   (cvd_cons * !!cvd_col) +
-                   (hba1c_cons * (!!hba1c_col-7)) +
-                   (insulin_cons * !!insulin_col) +
-                   (-(no_dm_med_cons * no_dm_med)) +
-                   (hba1c_insulin_cons * (!!hba1c_col-7) * !!insulin_col) +
-                   (hba1c_no_dm_med_cons * (!!hba1c_col-7) * no_dm_med) +
-                   (-(ever_smoker_cons * !!ever_smoker_col)) +
-                   (hypertension_cons * !!hypertension_col) +
-                   (bmi_cons * ((!!bmi_col/5)-5.4)) +
-                   (acr_cons * (log(!!acr_col, base=10) - 1))
-             )),
-           
+             exp_cons_confirmed +
+             (age_cons * ((!!age_col/5) - 11)) +  
+             (female_cons * female_sex) +
+             (black_eth_cons * !!black_eth_col) +
+             (egfr_cons1 * (15 - (min(!!egfr_col, 90)/5))) +
+             (-(egfr_cons2 * (max(0, !!egfr_col-90))/5)) +
+             (cvd_cons * !!cvd_col) +
+             (hba1c_cons * (!!hba1c_col-7)) +
+             (insulin_cons * !!insulin_col) +
+             (-(no_dm_med_cons * no_dm_med)) +
+             (hba1c_insulin_cons * (!!hba1c_col-7) * !!insulin_col) +
+             (hba1c_no_dm_med_cons * (!!hba1c_col-7) * no_dm_med) +
+             (-(ever_smoker_cons * !!ever_smoker_col)) +
+             (hypertension_cons * !!hypertension_col) +
+             (bmi_cons * ((!!bmi_col/5)-5.4)) +
+             (acr_cons * (log(!!acr_col, base=10) - 1)),
+            
            ckdpc_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_risk_confirmed_lin_predictor))))
   
   
