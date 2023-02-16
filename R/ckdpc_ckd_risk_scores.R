@@ -66,8 +66,8 @@ calculate_ckdpc_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c
     
   new_dataframe <- new_dataframe %>%
     
-    mutate(female_sex=ifelse(sex=="female", 1L, 0L),
-           no_dm_med=ifelse(insulin_col==0 & oha_col==0, 1L, 0L),
+    mutate(female_sex=ifelse(!!sex_col=="female", 1L, 0L),
+           no_dm_med=ifelse(!!insulin_col==0 & !!oha_col==0, 1L, 0L),
            
            ckdpc_risk_total_lin_predictor=
              exp_cons_total +

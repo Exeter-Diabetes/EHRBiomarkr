@@ -126,7 +126,7 @@ is.integer64 <- function(x){
 
 example_dataset <- example_dataset %>% mutate_if(is.integer64, as.integer)
 
-extra_vars <- data.frame(insulin=sample(c(0,1), replace=TRUE, size=100), oha=sample(c(0,1), replace=TRUE, size=100), hypertension=sample(c(0,1), replace=TRUE, size=100), preegfr=sample(c(65:90), replace=TRUE, size=100), preacr=sample(c(5:500), replace=TRUE, size=100))
+extra_vars <- data.frame(insulin=sample(c(0,1), replace=TRUE, size=100), oha=sample(c(0,1), replace=TRUE, size=100), hypertension=sample(c(0,1), replace=TRUE, size=100), preegfr=sample(c(65:90), replace=TRUE, size=100), preacr=sample(c(5:500), replace=TRUE, size=100), hba1c_perc=sample(c(6:11), replace=TRUE, size=100))
 
 example_dataset <- example_dataset %>% bind_cols(extra_vars)
 
@@ -136,7 +136,12 @@ ckdpc_risk <- example_dataset %>%
          black_eth=ifelse(ethnicity_qrisk2==6 | ethnicity_qrisk2==7, 1, 0),
          ever_smoker=ifelse(qrisk2_smoking_cat==0, 1, 0)) %>%
   
-  calculate_ckdpc_risk(age=dstartdate_age, sex=sex2, black_eth=black_eth, egfr=preegfr, cvd=cvd, hba1c=prehba1c, insulin=insulin, oha=oha, ever_smoker=ever_smoker, hypertension=hypertension, bmi=prebmi, acr=preacr)
+  calculate_ckdpc_risk(age=dstartdate_age, sex=sex2, black_eth=black_eth, egfr=preegfr, cvd=cvd, hba1c=hba1c_perc, insulin=insulin, oha=oha, ever_smoker=ever_smoker, hypertension=hypertension, bmi=prebmi, acr=preacr)
+
+
+
+test <- data.frame(prebmi=25, ever_smoker=0, cvd=0, hypertension=0, black_eth=0, sex2="male", dstartdate_age=25, preacr=5, hba1c_perc=7.7, insulin=0, oha=1)
+
 
 
 qdhf_and_qrisk2 %>% glimpse()
