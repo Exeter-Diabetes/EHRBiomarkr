@@ -133,7 +133,7 @@ calculate_ckdpc_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c
   
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_risk_total_score, ckdpc_risk_total_lin_predictor, ckdpc_risk_confirmed_score, ckdpc_risk_confirmed_lin_predictor)
+    select(id_col, ckdpc_risk_total_score, ckdpc_risk_total_lin_predictor, ckdpc_risk_confirmed_score, ckdpc_risk_confirmed_lin_predictor, ckdpc_risk_confirmed_score2)
 
   # Join back on to original data table 
   dataframe <- dataframe %>%
