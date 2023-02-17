@@ -45,7 +45,7 @@ calculate_ckdpc_egfr60_risk(
 
 \item{bmi}{BMI in kg/m2}
 
-\item{acr}{albumin:creatinine ratio in mg/g; value of 10 used if missing}
+\item{acr}{albumin:creatinine ratio in mg/g}
 }
 \description{
 calculate 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (total and confirmed events)
