@@ -3,7 +3,7 @@
 \docType{data}
 \name{ckdpc40EgfrRiskConstants}
 \alias{ckdpc40EgfrRiskConstants}
-\title{CKDPC 40% decline in eGFR or kidney failure risk score constants}
+\title{CKDPC 40\% decline in eGFR or kidney failure risk score constants}
 \format{
 An object of class \code{list} of length 17.
 }
