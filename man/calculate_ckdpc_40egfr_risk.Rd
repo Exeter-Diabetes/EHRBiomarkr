@@ -2,7 +2,7 @@
 % Please edit documentation in R/ckdpc_ckd_risk_scores.R
 \name{calculate_ckdpc_40egfr_risk}
 \alias{calculate_ckdpc_40egfr_risk}
-\title{Calculate CKDPC risk score for 3-year absolute risk of 40% decline in eGFR or kidney failure in people with diabetes with baseline eGFR>=60ml/min/1.73m2 (ckdpc_40egfr_risk) from Grams ME, Brunskill NJ, Ballew SH. Development and Validation of Prediction Models of Adverse Kidney Outcomes in the Population With and Without Diabetes Mellitus. Diabetes Care. doi:0.2337/dc22-0698 (https://diabetesjournals.org/care/article-abstract/45/9/2055/147251/Development-and-Validation-of-Prediction-Models-of?redirectedFrom=fulltext).}
+\title{Calculate CKDPC risk score for 3-year absolute risk of 40\% decline in eGFR or kidney failure in people with diabetes with baseline eGFR>=60ml/min/1.73m2 (ckdpc_40egfr_risk) from Grams ME, Brunskill NJ, Ballew SH. Development and Validation of Prediction Models of Adverse Kidney Outcomes in the Population With and Without Diabetes Mellitus. Diabetes Care. doi:0.2337/dc22-0698 (https://diabetesjournals.org/care/article-abstract/45/9/2055/147251/Development-and-Validation-of-Prediction-Models-of?redirectedFrom=fulltext).}
 \usage{
 calculate_ckdpc_40egfr_risk(
   dataframe,
