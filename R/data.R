@@ -48,7 +48,7 @@
 
 #' CKDPC 40% decline in eGFR or kidney failure risk score constants
 #'
-#' Constants required for to calculate 3-year CKDPC risk score for composite of 40% decline in eGFR or kidney failure in people with diabetes and baseline eGFR>=60ml/min/1.73m2. Source: Grams ME, Brunskill NJ, Ballew SH. Development and Validation of Prediction Models of Adverse Kidney Outcomes in the Population With and Without Diabetes Mellitus. Diabetes Care. doi:0.2337/dc22-0698 (https://diabetesjournals.org/care/article-abstract/45/9/2055/147251/Development-and-Validation-of-Prediction-Models-of?redirectedFrom=fulltext).
+#' Constants required for to calculate 3-year CKDPC risk score for composite of 40\% decline in eGFR or kidney failure in people with diabetes and baseline eGFR>=60ml/min/1.73m2. Source: Grams ME, Brunskill NJ, Ballew SH. Development and Validation of Prediction Models of Adverse Kidney Outcomes in the Population With and Without Diabetes Mellitus. Diabetes Care. doi:0.2337/dc22-0698 (https://diabetesjournals.org/care/article-abstract/45/9/2055/147251/Development-and-Validation-of-Prediction-Models-of?redirectedFrom=fulltext).
 #' 
 #' @docType data
 "ckdpc40EgfrRiskConstants"
