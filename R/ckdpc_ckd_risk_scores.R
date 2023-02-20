@@ -13,7 +13,7 @@
 #' @param ever_smoker ever smoker (0: no, 1: yes)
 #' @param hypertension current hypertension (defined as blood pressure of more than 140/90 mm Hg or use of antihypertensive medications; 0: no, 1: yes)
 #' @param bmi BMI in kg/m2
-#' @param acr albumin:creatinine ratio in mg/g
+#' @param acr urinary albumin:creatinine ratio in mg/g
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr inner_join
@@ -32,7 +32,6 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
   egfr_col <- as.symbol(deparse(substitute(egfr)))
   cvd_col <- as.symbol(deparse(substitute(cvd)))
   hba1c_col <- as.symbol(deparse(substitute(hba1c)))
-  dm_med_col <- as.symbol(deparse(substitute(dm_med)))
   insulin_col <- as.symbol(deparse(substitute(insulin)))
   oha_col <- as.symbol(deparse(substitute(oha)))
   ever_smoker_col <- as.symbol(deparse(substitute(ever_smoker)))
@@ -136,7 +135,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 #' @param age current age in years
 #' @param sex sex: "male" or "female"
 #' @param egfr current eGFR in ml/min/1.73m2
-#' @param acr albumin:creatinine ratio in mg/g
+#' @param acr urinary albumin:creatinine ratio in mg/g
 #' @param sbp systolic blood pressure in mmHg
 #' @param bp_meds current use of antihypertensive medications (0: no, 1: yes)
 #' @param hf history of heart failure (0: no, 1: yes)
