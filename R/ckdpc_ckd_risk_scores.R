@@ -75,8 +75,8 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (age_cons * ((!!age_col/5) - 11)) +  
              (female_cons * female_sex) +
              (black_eth_cons * !!black_eth_col) +
-             (egfr_cons1 * (15 - (min(!!egfr_col, 90)/5))) +
-             (-(egfr_cons2 * (max(0, !!egfr_col-90))/5)) +
+             (egfr_cons1 * (15 - (pmin(!!egfr_col, 90)/5))) +
+             (-(egfr_cons2 * (pmax(0, !!egfr_col-90))/5)) +
              (cvd_cons * !!cvd_col) +
              (hba1c_cons * (hba1c_percent-7)) +
              (insulin_cons * !!insulin_col) +
@@ -95,8 +95,8 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (age_cons * ((!!age_col/5) - 11)) +  
              (female_cons * female_sex) +
              (black_eth_cons * !!black_eth_col) +
-             (egfr_cons1 * (15 - (min(!!egfr_col, 90)/5))) +
-             (-(egfr_cons2 * (max(0, !!egfr_col-90))/5)) +
+             (egfr_cons1 * (15 - (pmin(!!egfr_col, 90)/5))) +
+             (-(egfr_cons2 * (pmax(0, !!egfr_col-90))/5)) +
              (cvd_cons * !!cvd_col) +
              (hba1c_cons * (hba1c_percent-7)) +
              (insulin_cons * !!insulin_col) +
