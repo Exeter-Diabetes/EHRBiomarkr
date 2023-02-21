@@ -19,7 +19,6 @@
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr row_number
 #' @importFrom dplyr select
-#' @importFrom dplyr bind_cols
 #' @export
 
 calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr) {
@@ -46,11 +45,13 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
   
   
   # Copy dataframe to new dataframe
-  new_dataframe <- dataframe
+  new_dataframe <- dataframe %>%
+    mutate(join_col=1L)
   
   
   # Fetch constants from package
-  ckdpc_egfr60_risk_vars <- data.frame(unlist(lapply(EHRBiomarkr::ckdpcEgfr60RiskConstants, function(y) lapply(y, as.numeric)), recursive="FALSE"))
+  ckdpc_egfr60_risk_vars <- data.frame(unlist(lapply(EHRBiomarkr::ckdpcEgfr60RiskConstants, function(y) lapply(y, as.numeric)), recursive="FALSE")) %>%
+    mutate(join_col=1L)
   
   
   # Join constants to data table
@@ -58,7 +59,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 
   new_dataframe <- new_dataframe %>%
     
-    bind_cols(ckdpc_egfr60_risk_vars, copy=TRUE)
+    inner_join(ckdpc_egfr60_risk_vars, by="join_col", copy=TRUE)
     
   
   # Do calculation
@@ -152,7 +153,6 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr row_number
 #' @importFrom dplyr select
-#' @importFrom dplyr bind_cols
 #' @export
 
 calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_meds, hf, chd, af, current_smoker, ex_smoker, bmi, hba1c, oha, insulin) {
@@ -182,11 +182,13 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
   
   
   # Copy dataframe to new dataframe
-  new_dataframe <- dataframe
+  new_dataframe <- dataframe %>%
+    mutate(join_col=1L)
   
   
   # Fetch constants from package
-  ckdpc_40egfr_risk_vars <- data.frame(unlist(lapply(EHRBiomarkr::ckdpc40EgfrRiskConstants, function(y) lapply(y, as.numeric)), recursive="FALSE"))
+  ckdpc_40egfr_risk_vars <- data.frame(unlist(lapply(EHRBiomarkr::ckdpc40EgfrRiskConstants, function(y) lapply(y, as.numeric)), recursive="FALSE")) %>%
+    mutate(join_col=1L)
   
   
   # Join constants to data table
@@ -194,7 +196,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
   
   new_dataframe <- new_dataframe %>%
     
-    bind_cols(ckdpc_40egfr_risk_vars, copy=TRUE)
+    inner_join(ckdpc_40egfr_risk_vars, by="join_col", copy=TRUE)
   
   
   # Do calculation
