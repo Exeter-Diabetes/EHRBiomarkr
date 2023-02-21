@@ -88,7 +88,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
              (acr_cons * (log(!!acr_col, base=10) - 1)),
            
-           ckdpc_egfr60_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_risk_total_lin_predictor))),
+           ckdpc_egfr60_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_egfr60_risk_total_lin_predictor))),
            
            ckdpc_egfr60_risk_confirmed_lin_predictor=
              exp_cons_confirmed +
@@ -108,7 +108,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
              (acr_cons * (log(!!acr_col, base=10) - 1)),
             
-           ckdpc_egfr60_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_risk_confirmed_lin_predictor))))
+           ckdpc_egfr60_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_egfr60_risk_confirmed_lin_predictor))))
   
   
   # Keep linear predictors and scores and unique ID columns only
@@ -224,7 +224,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
              (-(oha_cons * !!oha_col)) +
              (insulin_cons * !!insulin_col),
            
-           ckdpc_40_egfr_risk_score=100 * (exp(y)/(1+exp(y))))
+           ckdpc_40_egfr_risk_score=100 * (exp(ckdpc_40egfr_risk_lin_predictor)/(1+exp(ckdpc_40egfr_risk_lin_predictor))))
            
            
   # Keep linear predictors and scores and unique ID columns only
