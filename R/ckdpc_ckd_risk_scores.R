@@ -70,7 +70,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
            no_dm_med=ifelse(!!insulin_col==0 & !!oha_col==0, 1L, 0L),
            hba1c_percent=(!!hba1c_col*0.09418)+2.152,
            
-           test=paste0('sql_on="LOG(10.0,', 100, ')"'),
+           test=paste0('sql("LOG(10.0,', 100, ')")'),
            
            ckdpc_egfr60_risk_total_lin_predictor=
              exp_cons_total +
