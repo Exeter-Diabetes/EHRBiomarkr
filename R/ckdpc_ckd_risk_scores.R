@@ -70,7 +70,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
            no_dm_med=ifelse(!!insulin_col==0 & !!oha_col==0, 1L, 0L),
            hba1c_percent=(!!hba1c_col*0.09418)+2.152,
            
-           test=(acr_cons * (paste0('sql_on("LOG(10.0,\'', !!acr_col, '\')")') - 1)),
+           test=paste0('sql_on="LOG(10.0,', 100, ')"'),
            
            ckdpc_egfr60_risk_total_lin_predictor=
              exp_cons_total +
@@ -88,7 +88,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (-(ever_smoker_cons * !!ever_smoker_col)) +
              (hypertension_cons * !!hypertension_col) +
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
-             (acr_cons * (paste0('sql_on="LOG(10.0,', 100, ')"') - 1)),
+             (acr_cons * (paste0('sql_on("LOG(10.0,\'', !!acr_col, '\')")') - 1)),
            
            ckdpc_egfr60_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_egfr60_risk_total_lin_predictor))),
            
