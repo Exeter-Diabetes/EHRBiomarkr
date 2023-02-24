@@ -64,8 +64,9 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
   
   # Do calculation
   
-  acr_code <- eval(parse(text=paste0("sql(\'LOG(10.0, ", !!acr_col, ")\')")))
-    
+  acr_col2 <- deparse(substitute(acr))
+  acr_code <- eval(parse(text=paste0("sql(\'LOG(10.0, ", acr_col2, ")\')")))
+  
   new_dataframe <- new_dataframe %>%
     
     mutate(female_sex=ifelse(!!sex_col=="female", 1L, 0L),
@@ -73,6 +74,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
            hba1c_percent=(!!hba1c_col*0.09418)+2.152,
            
            ckdpc_egfr60_risk_total_lin_predictor=
+             ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
              exp_cons_total +
              (age_cons * ((!!age_col/5) - 11)) +  
              (female_cons * female_sex) +
@@ -88,11 +90,12 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (-(ever_smoker_cons * !!ever_smoker_col)) +
              (hypertension_cons * !!hypertension_col) +
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
-             (acr_cons * (acr_code - 1)),
+             (acr_cons * (acr_code - 1))),
            
            ckdpc_egfr60_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_egfr60_risk_total_lin_predictor))),
            
            ckdpc_egfr60_risk_confirmed_lin_predictor=
+             ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
              exp_cons_confirmed +
              (age_cons * ((!!age_col/5) - 11)) +  
              (female_cons * female_sex) +
@@ -108,14 +111,14 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (-(ever_smoker_cons * !!ever_smoker_col)) +
              (hypertension_cons * !!hypertension_col) +
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
-             (acr_cons * (paste0('sql_on("LOG(10.0,\'', !!acr_col, '\')")') - 1)),
+             (acr_cons * (acr_code - 1))),
             
            ckdpc_egfr60_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_egfr60_risk_confirmed_lin_predictor))))
   
   
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, hba1c_percent, test, ckdpc_egfr60_risk_total_score, ckdpc_egfr60_risk_total_lin_predictor, ckdpc_egfr60_risk_confirmed_score, ckdpc_egfr60_risk_confirmed_lin_predictor)
+    select(id_col, hba1c_percent, ckdpc_egfr60_risk_total_score, ckdpc_egfr60_risk_total_lin_predictor, ckdpc_egfr60_risk_confirmed_score, ckdpc_egfr60_risk_confirmed_lin_predictor)
 
   # Join back on to original data table 
   dataframe <- dataframe %>%
