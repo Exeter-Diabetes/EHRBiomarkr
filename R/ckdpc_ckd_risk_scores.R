@@ -229,7 +229,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
              (-(oha_cons * !!oha_col)) +
              (insulin_cons * !!insulin_col),
            
-           ckdpc_40_egfr_risk_score=100 * (exp(ckdpc_40egfr_risk_lin_predictor)/(1+exp(ckdpc_40egfr_risk_lin_predictor))))
+           ckdpc_40egfr_risk_score=100 * (exp(ckdpc_40egfr_risk_lin_predictor)/(1+exp(ckdpc_40egfr_risk_lin_predictor))))
            
            
   # Keep linear predictors and scores and unique ID columns only
