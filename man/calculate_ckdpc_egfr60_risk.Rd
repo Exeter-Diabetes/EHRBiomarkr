@@ -17,7 +17,8 @@ calculate_ckdpc_egfr60_risk(
   ever_smoker,
   hypertension,
   bmi,
-  acr
+  acr,
+  remote = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ calculate_ckdpc_egfr60_risk(
 \item{bmi}{BMI in kg/m2}
 
 \item{acr}{urinary albumin:creatinine ratio in mg/g}
+
+\item{remote}{whether dataframe is local in R (remote=FALSE; the default) or on a SQL server (remote=TRUE)}
 }
 \description{
 calculate 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (total and confirmed events)

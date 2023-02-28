@@ -20,7 +20,8 @@ calculate_ckdpc_40egfr_risk(
   bmi,
   hba1c,
   oha,
-  insulin
+  insulin,
+  remote = FALSE
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ calculate_ckdpc_40egfr_risk(
 \item{oha}{whether currently taking OHA (0: no, 1: yes)}
 
 \item{insulin}{whether currently taking insulin (0: no, 1: yes)}
+
+\item{remote}{whether dataframe is local in R (remote=FALSE; the default) or on a SQL server (remote=TRUE)}
 }
 \description{
 calculate 3-year absolute risk of 40% decline in eGFR or kidney failure in people with diabetes with baseline eGFR>=60ml/min/1.73m2
