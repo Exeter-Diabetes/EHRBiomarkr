@@ -206,6 +206,9 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
   
   # Do calculation
   
+  acr_col2 <- deparse(substitute(acr))
+  acr_code <- eval(parse(text=paste0("sql(\'LOG(10.0, (", acr_col2, "/10))\')")))
+  
   new_dataframe <- new_dataframe %>%
     
     mutate(male_sex=ifelse(!!sex_col=="male", 1L, 0L),
@@ -215,7 +218,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
              exp_cons +
              (-(male_cons * (male_sex - 0.5))) +
              (-(egfr_cons * ((!!egfr_col - 85)/5))) +
-             (acr_cons * log(!!acr_col/10)) +
+             (acr_cons * acr_code) +
              (sbp_cons * ((!!sbp_col - 130) /20)) +
              (bp_med_cons * !!bp_meds_col) +
              (-(sbp_bp_med_cons * ((!!sbp_col - 130)/20) * !!bp_meds_col)) +
