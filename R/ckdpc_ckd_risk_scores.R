@@ -14,6 +14,7 @@
 #' @param hypertension current hypertension (defined as blood pressure of more than 140/90 mm Hg or use of antihypertensive medications; 0: no, 1: yes)
 #' @param bmi BMI in kg/m2
 #' @param acr urinary albumin:creatinine ratio in mg/g
+#' @param remote whether dataframe is local in R (remote=FALSE; the default) or on a SQL server (remote=TRUE)
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr inner_join
@@ -21,7 +22,7 @@
 #' @importFrom dplyr select
 #' @export
 
-calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr) {
+calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr, remote=FALSE) {
   
 
   # Get handles for columns
@@ -65,13 +66,15 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
   # Do calculation
   
   acr_col2 <- deparse(substitute(acr))
-  acr_code <- eval(parse(text=paste0("sql(\'LOG(10.0, ", acr_col2, ")\')")))
-  
-  new_dataframe <- new_dataframe %>%
+  sql_log_acr <- eval(parse(text=paste0("sql(\'LOG(10.0, ", acr_col2, ")\')")))
+
+    new_dataframe <- new_dataframe %>%
     
     mutate(female_sex=ifelse(!!sex_col=="female", 1L, 0L),
            no_dm_med=ifelse(!!insulin_col==0 & !!oha_col==0, 1L, 0L),
-           hba1c_percent=(!!hba1c_col*0.09418)+2.152,
+           hba1c_percent=(!!hba1c_col*0.09148)+2.152,
+           
+           log_acr_var=ifelse(remote==TRUE, sql_log_acr, log(!!acr_col, base=10)),
            
            ckdpc_egfr60_risk_total_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
@@ -90,7 +93,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (-(ever_smoker_cons * !!ever_smoker_col)) +
              (hypertension_cons * !!hypertension_col) +
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
-             (acr_cons * (acr_code - 1))),
+             (acr_cons * (log_acr_var - 1))),
            
            ckdpc_egfr60_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_egfr60_risk_total_lin_predictor))),
            
@@ -111,7 +114,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (-(ever_smoker_cons * !!ever_smoker_col)) +
              (hypertension_cons * !!hypertension_col) +
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
-             (acr_cons * (acr_code - 1))),
+             (acr_cons * (log_acr_var - 1))),
             
            ckdpc_egfr60_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_egfr60_risk_confirmed_lin_predictor))))
   
@@ -153,6 +156,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 #' @param hba1c current HbA1c in mmol/mol
 #' @param oha whether currently taking OHA (0: no, 1: yes)
 #' @param insulin whether currently taking insulin (0: no, 1: yes)
+#' @param remote whether dataframe is local in R (remote=FALSE; the default) or on a SQL server (remote=TRUE)
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr inner_join
@@ -160,7 +164,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 #' @importFrom dplyr select
 #' @export
 
-calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_meds, hf, chd, af, current_smoker, ex_smoker, bmi, hba1c, oha, insulin) {
+calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_meds, hf, chd, af, current_smoker, ex_smoker, bmi, hba1c, oha, insulin, remote=FALSE) {
 
   
   # Get handles for columns
@@ -207,18 +211,22 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
   # Do calculation
   
   acr_col2 <- deparse(substitute(acr))
-  acr_code <- eval(parse(text=paste0("sql(\'LOG(10.0, (", acr_col2, "/10))\')")))
+  sql_log_acr <- eval(parse(text=paste0("sql(\'LN(", acr_col2, "/10)\')")))
   
   new_dataframe <- new_dataframe %>%
     
     mutate(male_sex=ifelse(!!sex_col=="male", 1L, 0L),
-           hba1c_percent=(!!hba1c_col*0.09418)+2.152,
+           hba1c_percent=(!!hba1c_col*0.09148)+2.152,
+           oha_var=ifelse(!!insulin_col==1, 1L, !!oha_col),
+           
+           log_acr_var=ifelse(remote==TRUE, sql_log_acr, log(!!acr_col/10)),
            
            ckdpc_40egfr_risk_lin_predictor=
              exp_cons +
+             (age_cons * ((!!age_col-60)/10)) +
              (-(male_cons * (male_sex - 0.5))) +
              (-(egfr_cons * ((!!egfr_col - 85)/5))) +
-             (acr_cons * acr_code) +
+             (acr_cons * log_acr_var) +
              (sbp_cons * ((!!sbp_col - 130) /20)) +
              (bp_med_cons * !!bp_meds_col) +
              (-(sbp_bp_med_cons * ((!!sbp_col - 130)/20) * !!bp_meds_col)) +
@@ -229,9 +237,9 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
              (ex_smoker_cons * !!ex_smoker_col) +
              (bmi_cons * ((!!bmi_col-30)/5)) +
              (hba1c_cons * (hba1c_percent-7)) +
-             (-(oha_cons * !!oha_col)) +
+             (-(oha_cons * oha_var)) +
              (insulin_cons * !!insulin_col),
-           
+
            ckdpc_40egfr_risk_score=100 * (exp(ckdpc_40egfr_risk_lin_predictor)/(1+exp(ckdpc_40egfr_risk_lin_predictor))))
            
            
