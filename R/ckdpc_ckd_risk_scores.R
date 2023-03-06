@@ -224,6 +224,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
            log_acr_var=ifelse(remote==TRUE, sql_log_acr, log(!!acr_col/10)),
            
            ckdpc_40egfr_risk_lin_predictor=
+             ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
              exp_cons +
              (age_cons * ((!!age_col-60)/10)) +
              (-(male_cons * (male_sex - 0.5))) +
@@ -240,7 +241,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
              (bmi_cons * ((!!bmi_col-30)/5)) +
              (hba1c_cons * (hba1c_percent-7)) +
              (-(oha_cons * oha_var)) +
-             (insulin_cons * !!insulin_col),
+             (insulin_cons * !!insulin_col)),
 
            ckdpc_40egfr_risk_score=100 * (exp(ckdpc_40egfr_risk_lin_predictor)/(1+exp(ckdpc_40egfr_risk_lin_predictor))))
            
