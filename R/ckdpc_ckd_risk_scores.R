@@ -24,7 +24,7 @@
 
 calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr, remote) {
   
-  if (is.na(remote)) {warning("please specify 'remote' value as TRUE or FALSE")} else {message("Note that values may be incorrect if 'remote' is not specified correctly (TRUE = on SQL server; FALSE=local in R)")}
+  message("Note that values may be incorrect if 'remote' is not specified correctly (TRUE = on SQL server; FALSE = local in R)")
 
   # Get handles for columns
   age_col <- as.symbol(deparse(substitute(age)))
@@ -167,7 +167,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 
 calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_meds, hf, chd, af, current_smoker, ex_smoker, bmi, hba1c, oha, insulin, remote) {
 
-  if (is.na(remote)) {warning("please specify 'remote' value as TRUE or FALSE")} else {message("Note that values may be incorrect if 'remote' is not specified correctly (TRUE = on SQL server; FALSE=local in R)")}
+  message("Note that values may be incorrect if 'remote' is not specified correctly (TRUE = on SQL server; FALSE = local in R)")
   
   # Get handles for columns
   age_col <- as.symbol(deparse(substitute(age)))
