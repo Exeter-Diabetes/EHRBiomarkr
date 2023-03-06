@@ -14,7 +14,7 @@
 #' @param hypertension current hypertension (defined as blood pressure of more than 140/90 mm Hg or use of antihypertensive medications; 0: no, 1: yes)
 #' @param bmi BMI in kg/m2
 #' @param acr urinary albumin:creatinine ratio in mg/g
-#' @param remote whether dataframe is local in R (remote=FALSE; the default) or on a SQL server (remote=TRUE)
+#' @param remote whether dataframe is local in R (remote=FALSE) or on a SQL server (remote=TRUE) - values will be calculated but incorrect if the wrong value for remote is used due to differences in how logs are calculated in R and SQL
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr inner_join
@@ -22,8 +22,9 @@
 #' @importFrom dplyr select
 #' @export
 
-calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr, remote=FALSE) {
+calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr, remote) {
   
+  if (is.na(remote)) {warning("please specify 'remote' value as TRUE or FALSE")} else {message("Note that values may be incorrect if 'remote' is not specified correctly (TRUE = on SQL server; FALSE=local in R)")}
 
   # Get handles for columns
   age_col <- as.symbol(deparse(substitute(age)))
@@ -156,7 +157,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 #' @param hba1c current HbA1c in mmol/mol
 #' @param oha whether currently taking OHA (0: no, 1: yes)
 #' @param insulin whether currently taking insulin (0: no, 1: yes)
-#' @param remote whether dataframe is local in R (remote=FALSE; the default) or on a SQL server (remote=TRUE)
+#' @param remote whether dataframe is local in R (remote=FALSE) or on a SQL server (remote=TRUE) - values will be calculated but incorrect if the wrong value for remote is used due to differences in how logs are calculated in R and SQL
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr inner_join
@@ -164,8 +165,9 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 #' @importFrom dplyr select
 #' @export
 
-calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_meds, hf, chd, af, current_smoker, ex_smoker, bmi, hba1c, oha, insulin, remote=FALSE) {
+calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_meds, hf, chd, af, current_smoker, ex_smoker, bmi, hba1c, oha, insulin, remote) {
 
+  if (is.na(remote)) {warning("please specify 'remote' value as TRUE or FALSE")} else {message("Note that values may be incorrect if 'remote' is not specified correctly (TRUE = on SQL server; FALSE=local in R)")}
   
   # Get handles for columns
   age_col <- as.symbol(deparse(substitute(age)))
@@ -251,6 +253,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
   dataframe <- dataframe %>%
     inner_join(new_dataframe, by="id_col") %>%
     select(-id_col)
+  
   
   message("New columns 'ckdpc_40egfr_risk_lin_predictor' and 'ckdpc_40egfr_risk_score' added")
   

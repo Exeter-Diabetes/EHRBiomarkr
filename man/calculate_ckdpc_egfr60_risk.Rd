@@ -18,7 +18,7 @@ calculate_ckdpc_egfr60_risk(
   hypertension,
   bmi,
   acr,
-  remote = FALSE
+  remote
 )
 }
 \arguments{
@@ -48,7 +48,7 @@ calculate_ckdpc_egfr60_risk(
 
 \item{acr}{urinary albumin:creatinine ratio in mg/g}
 
-\item{remote}{whether dataframe is local in R (remote=FALSE; the default) or on a SQL server (remote=TRUE)}
+\item{remote}{whether dataframe is local in R (remote=FALSE) or on a SQL server (remote=TRUE) - values will be calculated but incorrect if the wrong value for remote is used due to differences in how logs are calculated in R and SQL}
 }
 \description{
 calculate 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (total and confirmed events)
