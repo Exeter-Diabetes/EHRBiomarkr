@@ -46,7 +46,7 @@ calculate_ckdpc_egfr60_risk(
 
 \item{bmi}{BMI in kg/m2}
 
-\item{acr}{urinary albumin:creatinine ratio in mg/g}
+\item{acr}{urinary albumin:creatinine ratio in mg/mmol (note that mg/g is also used)}
 
 \item{remote}{whether dataframe is local in R (remote=FALSE) or on a SQL server (remote=TRUE) - values will be calculated but incorrect if the wrong value for remote is used due to differences in how logs are calculated in R and SQL}
 }

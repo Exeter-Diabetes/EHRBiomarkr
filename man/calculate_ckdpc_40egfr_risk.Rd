@@ -33,7 +33,7 @@ calculate_ckdpc_40egfr_risk(
 
 \item{egfr}{current eGFR in ml/min/1.73m2}
 
-\item{acr}{urinary albumin:creatinine ratio in mg/g}
+\item{acr}{urinary albumin:creatinine ratio in mg/g (note that mg/g is also used)}
 
 \item{sbp}{systolic blood pressure in mmHg}
 
