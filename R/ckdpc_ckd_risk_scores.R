@@ -13,7 +13,7 @@
 #' @param ever_smoker ever smoker (0: no, 1: yes)
 #' @param hypertension current hypertension (defined as blood pressure of more than 140/90 mm Hg or use of antihypertensive medications; 0: no, 1: yes)
 #' @param bmi BMI in kg/m2
-#' @param acr urinary albumin:creatinine ratio in mg/g
+#' @param acr urinary albumin:creatinine ratio in mg/mmol (note that mg/g is also used)
 #' @param remote whether dataframe is local in R (remote=FALSE) or on a SQL server (remote=TRUE) - values will be calculated but incorrect if the wrong value for remote is used due to differences in how logs are calculated in R and SQL
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
@@ -66,17 +66,15 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
   
   # Do calculation
   
-  acr_col2 <- deparse(substitute(acr))
-  sql_log_acr <- eval(parse(text=paste0("sql(\'LOG(10.0, ", acr_col2, ")\')")))
-
     new_dataframe <- new_dataframe %>%
     
     mutate(female_sex=ifelse(!!sex_col=="female", 1L, 0L),
            no_dm_med=ifelse(!!insulin_col==0 & !!oha_col==0, 1L, 0L),
            hba1c_percent=(!!hba1c_col*0.09148)+2.152,
+           acr_mgg=!!acr_col*8.8402,
            
-           log_acr_var=ifelse(remote==TRUE, sql_log_acr, log(!!acr_col, base=10)),
-           
+           log_acr_var=if(remote==TRUE) sql('LOG(10.0, acr_mgg)') else log(acr_mgg, base=10),
+
            ckdpc_egfr60_risk_total_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
              exp_cons_total +
@@ -145,7 +143,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
 #' @param age current age in years
 #' @param sex sex: "male" or "female"
 #' @param egfr current eGFR in ml/min/1.73m2
-#' @param acr urinary albumin:creatinine ratio in mg/g
+#' @param acr urinary albumin:creatinine ratio in mg/g (note that mg/g is also used)
 #' @param sbp systolic blood pressure in mmHg
 #' @param bp_meds current use of antihypertensive medications (0: no, 1: yes)
 #' @param hf history of heart failure (0: no, 1: yes)
@@ -212,16 +210,16 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
   
   # Do calculation
   
-  acr_col2 <- deparse(substitute(acr))
-  sql_log_acr <- eval(parse(text=paste0("sql(\'LN(", acr_col2, "/10)\')")))
-  
   new_dataframe <- new_dataframe %>%
     
     mutate(male_sex=ifelse(!!sex_col=="male", 1L, 0L),
            hba1c_percent=(!!hba1c_col*0.09148)+2.152,
            oha_var=ifelse(!!insulin_col==1, 1L, !!oha_col),
+           ex_smoker_var=ifelse(!!current_smoker_col==1, 0L, !!ex_smoker_col),
            
-           log_acr_var=ifelse(remote==TRUE, sql_log_acr, log(!!acr_col/10)),
+           acr_mgg=!!acr_col*8.8402,
+
+           log_acr_var=if(remote==TRUE) sql('LN(acr_mgg/10)') else log(acr_mgg/10),
            
            ckdpc_40egfr_risk_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
@@ -237,7 +235,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
              (chd_cons * (!!chd_col-0.15)) +
              (af_cons * !!af_col) +
              (current_smoker_cons * !!current_smoker_col) +
-             (ex_smoker_cons * !!ex_smoker_col) +
+             (ex_smoker_cons * ex_smoker_var) +
              (bmi_cons * ((!!bmi_col-30)/5)) +
              (hba1c_cons * (hba1c_percent-7)) +
              (-(oha_cons * oha_var)) +
@@ -248,7 +246,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
            
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_40egfr_risk_lin_predictor, ckdpc_40egfr_risk_score)
+    select(id_col, ckdpc_40egfr_risk_lin_predictor, ckdpc_40egfr_risk_score, acr_mgg)
   
   # Join back on to original data table 
   dataframe <- dataframe %>%
