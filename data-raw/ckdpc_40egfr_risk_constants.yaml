@@ -1,4 +1,4 @@
-exp_cons: "-4.2125"
+intercept: "-4.2125"
 age_cons: "0.1465"
 male_cons: "0.2481"
 egfr_cons: "0.0562"

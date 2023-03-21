@@ -115,12 +115,14 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
              (bmi_cons * ((!!bmi_col/5)-5.4)) +
              (acr_cons * (log_acr_var - 1))),
             
-           ckdpc_egfr60_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_egfr60_risk_confirmed_lin_predictor))))
-  
+           ckdpc_egfr60_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_egfr60_risk_confirmed_lin_predictor))),
+           
+           ckdpc_egfr60_risk_confirmed_score2=100 * (1 - (new_surv_confirmed^exp(ckdpc_egfr60_risk_confirmed_lin_predictor))))
+    
   
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_egfr60_risk_total_score, ckdpc_egfr60_risk_total_lin_predictor, ckdpc_egfr60_risk_confirmed_score, ckdpc_egfr60_risk_confirmed_lin_predictor)
+    select(id_col, ckdpc_egfr60_risk_total_score, ckdpc_egfr60_risk_total_lin_predictor, ckdpc_egfr60_risk_confirmed_score, ckdpc_egfr60_risk_confirmed_score2, ckdpc_egfr60_risk_confirmed_lin_predictor)
 
   # Join back on to original data table 
   dataframe <- dataframe %>%
@@ -223,7 +225,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
            
            ckdpc_40egfr_risk_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
-             exp_cons +
+             intercept +
              (age_cons * ((!!age_col-60)/10)) +
              (-(male_cons * (male_sex - 0.5))) +
              (-(egfr_cons * ((!!egfr_col - 85)/5))) +
@@ -240,13 +242,32 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
              (hba1c_cons * (hba1c_percent-7)) +
              (-(oha_cons * oha_var)) +
              (insulin_cons * !!insulin_col)),
+           
+           ckdpc_40egfr_risk_lin_predictor2=
+             ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
+                      (age_cons * ((!!age_col-60)/10)) +
+                      (-(male_cons * (male_sex - 0.5))) +
+                      (-(egfr_cons * ((!!egfr_col - 85)/5))) +
+                      (acr_cons * log_acr_var) +
+                      (sbp_cons * ((!!sbp_col - 130) /20)) +
+                      (bp_med_cons * !!bp_meds_col) +
+                      (-(sbp_bp_med_cons * ((!!sbp_col - 130)/20) * !!bp_meds_col)) +
+                      (hf_cons * (!!hf_col-0.05)) +
+                      (chd_cons * (!!chd_col-0.15)) +
+                      (af_cons * !!af_col) +
+                      (current_smoker_cons * !!current_smoker_col) +
+                      (ex_smoker_cons * ex_smoker_var) +
+                      (bmi_cons * ((!!bmi_col-30)/5)) +
+                      (hba1c_cons * (hba1c_percent-7)) +
+                      (-(oha_cons * oha_var)) +
+                      (insulin_cons * !!insulin_col)),
 
-           ckdpc_40egfr_risk_score=100 * (exp(ckdpc_40egfr_risk_lin_predictor)/(1+exp(ckdpc_40egfr_risk_lin_predictor))))
+           ckdpc_40egfr_risk_score2=100 * (exp(ckdpc_40egfr_risk_lin_predictor + intercept)/(1 + exp(ckdpc_40egfr_risk_lin_predictor + intercept))))
            
            
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_40egfr_risk_lin_predictor, ckdpc_40egfr_risk_score, acr_mgg)
+    select(id_col, ckdpc_40egfr_risk_lin_predictor, ckdpc_40egfr_risk_score, ckdpc_40egfr_risk_lin_predictor2, ckdpc_40egfr_risk_score2)
   
   # Join back on to original data table 
   dataframe <- dataframe %>%
