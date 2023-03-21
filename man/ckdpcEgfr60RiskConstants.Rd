@@ -5,7 +5,7 @@
 \alias{ckdpcEgfr60RiskConstants}
 \title{CKDPC eGFR<60 risk score constants}
 \format{
-An object of class \code{list} of length 21.
+An object of class \code{list} of length 19.
 }
 \usage{
 ckdpcEgfr60RiskConstants
