@@ -96,6 +96,8 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
            
            ckdpc_egfr60_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_egfr60_risk_total_lin_predictor))),
            
+           ckdpc_egfr60_risk_total_score2=100 * (1 - (new_surv_total^exp(ckdpc_egfr60_risk_total_lin_predictor))),
+           
            ckdpc_egfr60_risk_confirmed_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
              exp_cons_confirmed +
