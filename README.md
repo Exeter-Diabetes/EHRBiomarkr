@@ -12,26 +12,26 @@ Two functions for cleaning biomarker values are included in this package:
 
 These functions can be applied to the following biomarkers:
 
--   Albumin-creatinine ratio (`acr`)
--   (Blood) albumin (`albumin_blood`)
--   Alanine aminotransferase (`alt`)
--   Aspartate aminotransferase(`ast`)
--   Bilirubin (`bilirubin`)
--   BMI (adults only; `bmi`)
--   Serum/plasma creatinine (`creatinine_blood`)
--   Diastolic blood pressure (`dbp`)
--   Fasting glucose (`fastingglucose`)
--   Haematocrit (`haematocrit`)
--   Haemoglobin (`haemoglobin`)
--   HbA1c (`hba1c`)
--   HDL (`hdl`)
--   Height (adults only; `height`)
--   LDL (`ldl`)
--   Protein-creatinine ratio (`pcr`)
--   Systolic blood pressure (`sbp`)
--   Total cholesterol (`totalcholesterol`)
--   Triglycerides (`triglyceride`)
--   Weight (adults only; `weight`)
+-   Albumin-creatinine ratio (`acr`), output is in mg/mmol
+-   (Blood) albumin (`albumin_blood`), output in g/L
+-   Alanine aminotransferase (`alt`), output in u/L
+-   Aspartate aminotransferase(`ast`), output in u/L
+-   Bilirubin (`bilirubin`), output in umol/L
+-   BMI (adults only; `bmi`), output in kg/m2
+-   Serum/plasma creatinine (`creatinine_blood`), output in umol/L
+-   Diastolic blood pressure (`dbp`), output in mmHg
+-   Fasting glucose (`fastingglucose`), output in mmol/L
+-   Haematocrit (`haematocrit`), output in %
+-   Haemoglobin (`haemoglobin`), output in g/L
+-   HbA1c (`hba1c`), output in mmol/mol
+-   HDL (`hdl`), output in mmol/L
+-   Height (adults only; `height`), output in cm
+-   LDL (`ldl`), output in mmol/L
+-   Protein-creatinine ratio (`pcr`), output in mg/mmol
+-   Systolic blood pressure (`sbp`), output in mmHg
+-   Total cholesterol (`totalcholesterol`), output in mmol/L
+-   Triglycerides (`triglyceride`), output in mmol/L
+-   Weight (adults only; `weight`), output in kg
 
 Example:
 
