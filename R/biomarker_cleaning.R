@@ -29,7 +29,7 @@ clean_biomarker_units = function(dataset, numunitid_col, biomrkr) {
 #' @description only keep measurements within acceptable limits for specified biomarker
 #' @param dataset dataset containing biomarker observations
 #' @param biomrkr_col name of column containing biomarker values
-#' @param biomrkr name of biomarker to clean (acr/albumin_blood/alt/ast/bilirubin/bmi/creatinine_blood/dbp/fastingglucose/haemotocrit/haemoglobin/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)
+#' @param biomrkr name of biomarker to clean (acr/albumin_blood/alt/ast/bilirubin/bmi/creatinine_blood/dbp/fastingglucose/haematocrit/haemoglobin/hba1c/hdl/height/ldl/pcr/sbp/totalcholesterol/triglyceride/weight)
 #' @importFrom magrittr %>%
 #' @export
 
