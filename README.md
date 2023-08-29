@@ -12,16 +12,16 @@ Two functions for cleaning biomarker values are included in this package:
 
 These functions can be applied to the following biomarkers:
 
--   Albumin-creatinine ratio (`acr`), output is in mg/mmol
+-   Albumin-creatinine ratio (`acr`), output is in mg/mmol / g/mol
 -   (Blood) albumin (`albumin_blood`), output in g/L
--   Alanine aminotransferase (`alt`), output in u/L
--   Aspartate aminotransferase(`ast`), output in u/L
+-   Alanine aminotransferase (`alt`), output in U/L
+-   Aspartate aminotransferase(`ast`), output in U/L
 -   Bilirubin (`bilirubin`), output in umol/L
 -   BMI (adults only; `bmi`), output in kg/m2
 -   Serum/plasma creatinine (`creatinine_blood`), output in umol/L
 -   Diastolic blood pressure (`dbp`), output in mmHg
 -   Fasting glucose (`fastingglucose`), output in mmol/L
--   Haematocrit (`haematocrit`), output in %
+-   Haematocrit (`haematocrit`), output as a proportion out of 1
 -   Haemoglobin (`haemoglobin`), output in g/L
 -   HbA1c (`hba1c`), output in mmol/mol
 -   HDL (`hdl`), output in mmol/L
