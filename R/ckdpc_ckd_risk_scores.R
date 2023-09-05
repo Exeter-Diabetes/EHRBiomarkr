@@ -74,12 +74,13 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
            no_dm_med=ifelse(!!insulin_col==0 & !!oha_col==0, 1L, 0L),
            hba1c_percent=(!!hba1c_col*0.09148)+2.152,
            
-           acr_mgg=ifelse(complete_acr==FALSE, !!acr_col*8.8402, ifelse(!is.na(!!acr_col) & !!acr_col!=0, !!acr_col*8.8402, 10)),
+           complete_acr_var=complete_acr,
+           acr_mgg=ifelse(complete_acr_var==FALSE, !!acr_col*8.8402, ifelse(!is.na(!!acr_col) & !!acr_col!=0, !!acr_col*8.8402, 10)),
            
            log_acr_var=if(remote==TRUE) sql('LOG(10.0, acr_mgg)') else log(acr_mgg, base=10),
            
            ckdpc_egfr60_total_lin_predictor=
-             ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
+             ifelse(is.na(acr_mgg) | acr_mgg==0, NA,
                     exp_cons_total +
                       (age_cons * ((!!age_col/5) - 11)) +  
                       (female_cons * female_sex) +
@@ -100,7 +101,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
            ckdpc_egfr60_total_score=100 * (1 - (new_surv_total^exp(ckdpc_egfr60_total_lin_predictor))),
            
            ckdpc_egfr60_confirmed_lin_predictor=
-             ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
+             ifelse(is.na(acr_mgg) | acr_mgg==0, NA,
                     exp_cons_confirmed +
                       (age_cons * ((!!age_col/5) - 11)) +  
                       (female_cons * female_sex) +
@@ -256,7 +257,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
     select(-id_col)
   
   
-  message("New columns 'ckdpc_40egfr_lin_predictor' and 'ckdpc_40egf_score' added")
+  message("New columns 'ckdpc_40egfr_lin_predictor' and 'ckdpc_40egfr_score' added")
   
   return(dataframe)
   
