@@ -78,7 +78,7 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
            
            log_acr_var=if(remote==TRUE) sql('LOG(10.0, acr_mgg)') else log(acr_mgg, base=10),
            
-           ckdpc_egfr60_risk_total_lin_predictor=
+           ckdpc_egfr60_total_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
                     exp_cons_total +
                       (age_cons * ((!!age_col/5) - 11)) +  
@@ -97,9 +97,9 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
                       (bmi_cons * ((!!bmi_col/5)-5.4)) +
                       (acr_cons * (log_acr_var - 1))),
            
-           ckdpc_egfr60_risk_total_score=100 * (1 - (new_surv_total^exp(ckdpc_egfr60_risk_total_lin_predictor))),
+           ckdpc_egfr60_total_score=100 * (1 - (new_surv_total^exp(ckdpc_egfr60_total_lin_predictor))),
            
-           ckdpc_egfr60_risk_confirmed_lin_predictor=
+           ckdpc_egfr60_confirmed_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
                     exp_cons_confirmed +
                       (age_cons * ((!!age_col/5) - 11)) +  
@@ -118,19 +118,19 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
                       (bmi_cons * ((!!bmi_col/5)-5.4)) +
                       (acr_cons * (log_acr_var - 1))),
            
-           ckdpc_egfr60_risk_confirmed_score=100 * (1 - (new_surv_confirmed^exp(ckdpc_egfr60_risk_confirmed_lin_predictor))))
+           ckdpc_egfr60_confirmed_score=100 * (1 - (new_surv_confirmed^exp(ckdpc_egfr60_confirmed_lin_predictor))))
            
            
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_egfr60_risk_total_score, ckdpc_egfr60_total_risk_lin_predictor, ckdpc_egfr60_risk_confirmed_score, ckdpc_egfr60_risk_confirmed_lin_predictor)
+    select(id_col, ckdpc_egfr60_total_score, ckdpc_egfr60_total_lin_predictor, ckdpc_egfr60_confirmed_score, ckdpc_egfr60_confirmed_lin_predictor)
 
   # Join back on to original data table 
   dataframe <- dataframe %>%
     inner_join(new_dataframe, by="id_col") %>%
     select(-id_col)
   
-  message("New columns 'ckdpc_egfr60_risk_total_score', 'ckdpc_egfr60_risk_total_lin_predictor', 'ckdpc_egfr60_risk_confirmed_score', and 'ckdpc_egfr60_risk_confirmed_lin_predictor' added")
+  message("New columns 'ckdpc_egfr60_total_score', 'ckdpc_egfr60_total_lin_predictor', 'ckdpc_egfr60_confirmed_score', and 'ckdpc_egfr60_confirmed_lin_predictor' added")
   
   return(dataframe)
   
@@ -224,7 +224,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
 
            log_acr_var=if(remote==TRUE) sql('LN(acr_mgg/10)') else log(acr_mgg/10),
            
-           ckdpc_40egfr_risk_lin_predictor=
+           ckdpc_40egfr_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
                       (age_cons * ((!!age_col-60)/10)) +
                       (-(male_cons * (male_sex - 0.5))) +
@@ -243,12 +243,12 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
                       (-(oha_cons * oha_var)) +
                       (insulin_cons * !!insulin_col)),
 
-           ckdpc_40egfr_risk_score=100 * (exp(ckdpc_40egfr_risk_lin_predictor2 + intercept)/(1 + exp(ckdpc_40egfr_risk_lin_predictor2 + intercept))))
+           ckdpc_40egfr_score=100 * (exp(ckdpc_40egfr_lin_predictor + intercept)/(1 + exp(ckdpc_40egfr_lin_predictor + intercept))))
            
            
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_40egfr_risk_lin_predictor, ckdpc_40egfr_risk_score)
+    select(id_col, ckdpc_40egfr_lin_predictor, ckdpc_40egfr_score)
   
   # Join back on to original data table 
   dataframe <- dataframe %>%
@@ -256,7 +256,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
     select(-id_col)
   
   
-  message("New columns 'ckdpc_40egfr_risk_lin_predictor' and 'ckdpc_40egfr_risk_score' added")
+  message("New columns 'ckdpc_40egfr_lin_predictor' and 'ckdpc_40egf_score' added")
   
   return(dataframe)
   
