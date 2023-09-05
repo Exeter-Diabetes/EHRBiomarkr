@@ -1,8 +1,8 @@
 # Setup
 library(tidyverse)
 library(aurum)
-#library(EHRBiomarkr)
-devtools::load_all()
+library(EHRBiomarkr)
+#devtools::load_all()
 rm(list=ls())
 
 cprd = CPRDData$new(cprdEnv = "test-remote",cprdConf = "~/.aurum.yaml")
@@ -134,22 +134,7 @@ local_all <- ckdpc40_test %>%
          ckdpc_40egfr_lin_predictor=round(ckdpc_40egfr_lin_predictor, 5),
          ckdpc_40egfr_score=round(ckdpc_40egfr_score, 5))
 
-test <- local_all %>%
-  inner_join(remote_all, by = c("id",
-                                "missing_acr_total_score",
-                                "missing_acr_total_lp",
-                                "missing_acr_confirmed_score",
-                                "missing_acr_lp",
-                                "ckdpc_egfr60_total_score",
-                                "ckdpc_egfr60_total_lin_predictor",
-                                "ckdpc_egfr60_confirmed_score",
-                                "ckdpc_egfr60_confirmed_lin_predictor",
-                                "ckdpc_40egfr_lin_predictor",
-                                "ckdpc_40egfr_score"
-                                )) %>%
-  #count()
-  select(id, starts_with("missing"), starts_with("ckdpc"))
-
+local_all %>% inner_join(remote_all) %>% count()
 # Check values match those from above
 # Should be full count
 

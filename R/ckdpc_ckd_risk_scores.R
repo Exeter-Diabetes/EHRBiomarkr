@@ -249,7 +249,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
            
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_40egfr_lin_predictor, ckdpc_40egfr_score)
+    select(id_col, ckdpc_40egfr_score, ckdpc_40egfr_lin_predictor)
   
   # Join back on to original data table 
   dataframe <- dataframe %>%
@@ -257,7 +257,7 @@ calculate_ckdpc_40egfr_risk = function(dataframe, age, sex, egfr, acr, sbp, bp_m
     select(-id_col)
   
   
-  message("New columns 'ckdpc_40egfr_lin_predictor' and 'ckdpc_40egfr_score' added")
+  message("New columns 'ckdpc_40egfr_score' and 'ckdpc_40egfr_lin_predictor' added")
   
   return(dataframe)
   
