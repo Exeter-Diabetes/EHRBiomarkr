@@ -126,8 +126,8 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
 #' @param smoking QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
 #' @param type1 Type 1 diabetes (binary)
 #' @param type2 Type 2 diabetes (binary)
-#' @param fh_cvd family history of premature cardiovascular disease
-#' @param renal CKD stage 4 or 5
+#' @param fh_cvd family history of premature cardiovascular disease (binary)
+#' @param renal CKD stage 4 or 5 (binary)
 #' @param af atrial fibrillation (binary)
 #' @param bp_med on blood pressure medication (binary)
 #' @param rheumatoid_arth rheumatoid arthritis (binary)
@@ -357,14 +357,14 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
 #' @param smoking QRISK2 smoking category: 0=Non-smoker, 1=Ex-smoker, 2=Current light smoker, 3=Current moderate smoker, 4=Current heavy smoker
 #' @param duration diabetes duration: 0=within the last year, 1=1-3 years, 2=4-6 years, 3=7-10 years, 4=11 or more
 #' @param type1 Type 1 diabetes (binary) otherwise Type 2 assumed
-#' @param cvd history of angina, heart attack or stroke
+#' @param cvd history of angina, heart attack or stroke (binary)
 #' @param af atrial fibrillation (binary)
-#' @param renal CKD stage 4 or 5
+#' @param renal CKD stage 4 or 5 (binary)
 #' @param hba1c last HbA1c in mmol/mol
 #' @param cholhdl cholesterol:HDL ratio
 #' @param sbp systolic blood pressure in mmHg
 #' @param bmi BMI in kg/m2
-#' @param survhow many years survival to use in model (default 10)
+#' @param surv how many years survival to use in model (default 10)
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number

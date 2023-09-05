@@ -40,11 +40,11 @@ calculate_qdiabeteshf(
 
 \item{type1}{Type 1 diabetes (binary) otherwise Type 2 assumed}
 
-\item{cvd}{history of angina, heart attack or stroke}
+\item{cvd}{history of angina, heart attack or stroke (binary)}
 
 \item{af}{atrial fibrillation (binary)}
 
-\item{renal}{CKD stage 4 or 5}
+\item{renal}{CKD stage 4 or 5 (binary)}
 
 \item{hba1c}{last HbA1c in mmol/mol}
 
@@ -54,7 +54,7 @@ calculate_qdiabeteshf(
 
 \item{bmi}{BMI in kg/m2}
 
-\item{survhow}{many years survival to use in model (default 10)}
+\item{surv}{how many years survival to use in model (default 10)}
 }
 \description{
 calculates QDiabetes-HF 2015 score

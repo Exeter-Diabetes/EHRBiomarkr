@@ -41,9 +41,9 @@ calculate_qrisk2(
 
 \item{type2}{Type 2 diabetes (binary)}
 
-\item{fh_cvd}{family history of premature cardiovascular disease}
+\item{fh_cvd}{family history of premature cardiovascular disease (binary)}
 
-\item{renal}{CKD stage 4 or 5}
+\item{renal}{CKD stage 4 or 5 (binary)}
 
 \item{af}{atrial fibrillation (binary)}
 
