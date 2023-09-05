@@ -47,7 +47,7 @@ INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egf
 VALUES ("male8", 50, "male", 0, 80, 1, 91.3, 1, 1, 1, 1, 30, 5.7, 150, 0, 0, 0, 1, 1, 1);
 
 INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
-VALUES ("male9", 50, "male", 0, 70, 0, 91.3, 1, 1, 0, 1, 30, 5.7, 150, 1, 0, 1, 1, 1, 0);
+VALUES ("male9", 50, "male", 0, 70, 0, 91.3, 1, 1, 0, 1, 30, NULL, 150, 1, 0, 1, 1, 1, 0);
 
 INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
 VALUES ("male10", 50, "male", 0, 70, 1, 42.1, 0, 1, 1, 0, 30, 5.7, 150, 1, 1, 1, 0, 0, 0);
@@ -77,23 +77,11 @@ INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egf
 VALUES ("female8", 50, "female", 0, 80, 1, 91.3, 1, 1, 1, 1, 30, 5.7, 150, 0, 0, 0, 1, 1, 1);
 
 INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
-VALUES ("female9", 50, "female", 0, 70, 0, 91.3, 1, 1, 0, 1, 30, 5.7, 150, 1, 0, 1, 1, 1, 0);
+VALUES ("female9", 50, "female", 0, 70, 0, 91.3, 1, 1, 0, 1, 30, NULL, 150, 1, 0, 1, 1, 1, 0);
 
 INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
 VALUES ("female10", 50, "female", 0, 70, 1, 42.1, 0, 1, 1, 0, 30, 5.7, 150, 1, 1, 1, 0, 0, 0);
 
 
-INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
-VALUES ("malea", 50, "male", 0, 70, 1, 42.1, 0, 1, 1, 0, 30, 5.7, 150, 1, 1, 1, 0, 0, 0);
 
-INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
-VALUES ("maleb", 50, "male", 0, 70, 1, 91.3, 0, 1, 1, 0, 30, 5.7, 150, 1, 1, 1, 0, 0, 0);
 
-INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
-VALUES ("malec", 50, "male", 0, 70, 1, 91.3, 1, 0, 1, 0, 30, 5.7, 150, 1, 1, 1, 0, 0, 0);
-
-INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
-VALUES ("maled", 50, "male", 0, 70, 1, 91.3, 1, 0, 1, 0, 29, 5.7, 150, 1, 1, 1, 0, 0, 0);
-
-INSERT INTO katie_ckd_score_test (id, age_var, sex_var, black_ethnicity_var, egfr_var, cvd_var, hba1c_var, insulin_var, oha_var, ever_smoker_var, hypertension_var, bmi_var, acr_var, sbp_var, bp_meds_var, hf_var, chd_var, af_var, current_smoker_var, ex_smoker_var)
-VALUES ("malee", 50, "male", 0, 70, 1, 91.3, 1, 0, 1, 0, 29, 5.7, 170, 1, 1, 1, 0, 0, 0);
