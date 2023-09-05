@@ -1,6 +1,6 @@
 # EHRBiomarkr
 
-This package has various functions for cleaning and prcoessing biomarkers in EHR, especially in CPRD Aurum. All functions can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
+This package has various functions for cleaning and processing biomarkers in EHR, especially in CPRD Aurum. All functions can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
 
 ## Biomarker cleaning functions
 
@@ -59,7 +59,62 @@ clean_egfr_medcodes <- clean_creatinine_blood_medcodes %>%
 
 ## Cardiovascular risk score functions
 
-Functions for calculating the following QRISK2 (2017) and QDiabetes-Heart Failure (2015) are included in this package. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
+Functions for calculating QRISK2 (2017) and QDiabetes-Heart Failure (2015) are included in this package. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
+
+### QRISK2 (2017)
+
+Example:
+
+``` r
+results <- dataframe %>%
+  calculate_qrisk2(age = age_var,
+                    sex = sex_var,
+                    ethrisk = ethrisk_var,
+                    town = town_var,
+                    smoking = smoking_var,
+                    fh_cvd = fh_cvd_var,
+                    renal = renal_var,
+                    af = af_var,
+                    rheumatoid_arth=rheumatoid_arth_var,
+                    bp_med = bp_med_var,
+                    cholhdl = cholhdl_var,
+                    sbp = sbp_var,
+                    bmi = bmi_var,
+                    type1 = type1_var,
+                    type2 = type2_var,
+                    surv = surv_var)
+```  
+
+&nbsp;
+
+### QDiabetes-Heart Failure (2015)
+
+Example:
+
+``` r
+results <- dataframe %>%
+  calculate_qdiabeteshf(age = age_var
+                        sex = sex_var,
+                        ethrisk = ethrisk_var,
+                        town = town_var,
+                        smoking = smoking_var,
+                        duration = diabetes_duration_var,
+                        renal = renal_var,
+                        af = af_var,
+                        cvd = cvd_var,
+                        hba1c = hba1c_var,
+                        cholhdl = cholhdl_var,
+                        sbp = sbp_var,
+                        bmi = bmi_var,
+                        type1 = type1_var,
+                        surv = surv_var)
+```
+
+&nbsp;
+
+## Kidney risk score functions
+
+Functions for calculating two Chronic Kidney Disease Prognosis Consortium (CKD-PC) risk scores are included in this package: 5-year risk of eGFR <60 mL/min/1.73m2 (https://ckdpcrisk.org/ckdrisk/; total and confirmed events) and 3-years risk of 40% decline in eGFR (https://ckdpcrisk.org/gfrdecline40/). The former includes versions for missing ACR, and where missing ACR is substituted with 10mg/g as per the model development paper (Nelson RG, Grams ME, Ballew SH. Development of Risk Prediction Equations for Incident Chronic Kidney Disease. JAMA. doi:10.1001/jama.2019.17379 (https://jamanetwork.com/journals/jama/fullarticle/2755299)). NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_ckdpc_egfr60_risk`, `?calculate_ckdpc_egfr60_complete_acr_risk` and `?calculate_ckdpc_40egfr_risk`) for further explanation of variables.
 
 ### QRISK2 (2017)
 
