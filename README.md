@@ -1,6 +1,6 @@
 # EHRBiomarkr
 
-This package has various functions for cleaning and prcoessing biomarkers in EHR, especially in CPRD Aurum. All functions can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
+This package has various functions for cleaning and processing biomarkers in EHR, especially in CPRD Aurum. All functions can be used on local data (loaded into R) or data stored in MySQL (by using the dbplyr package or another package which uses dbplyr e.g. [aurum](http://github.com/Exeter-Diabetes/CPRD-analysis-package)).
 
 ## Biomarker cleaning functions
 
@@ -59,7 +59,7 @@ clean_egfr_medcodes <- clean_creatinine_blood_medcodes %>%
 
 ## Cardiovascular risk score functions
 
-Functions for calculating the following QRISK2 (2017) and QDiabetes-Heart Failure (2015) are included in this package. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
+Functions for calculating QRISK2 (2017) and QDiabetes-Heart Failure (2015) are included in this package. NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_qrisk2` and `?calculate_qdiabeteshf`) for further explanation of variables. 
 
 ### QRISK2 (2017)
 
@@ -108,4 +108,58 @@ results <- dataframe %>%
                         bmi = bmi_var,
                         type1 = type1_var,
                         surv = surv_var)
+```
+
+&nbsp;
+
+## Kidney risk score functions
+
+Functions for calculating two Chronic Kidney Disease Prognosis Consortium (CKD-PC) risk scores are included in this package: 5-year risk of eGFR <60 mL/min/1.73m2 (https://ckdpcrisk.org/ckdrisk/; total and confirmed events) and 3-years risk of 40% decline in eGFR (https://ckdpcrisk.org/gfrdecline40/). The former includes versions for missing ACR, and where missing ACR is substituted with 10mg/g as per the model development paper (Nelson RG, Grams ME, Ballew SH. Development of Risk Prediction Equations for Incident Chronic Kidney Disease. JAMA. doi:10.1001/jama.2019.17379 (https://jamanetwork.com/journals/jama/fullarticle/2755299)). NB: both functions will calculate scores for individuals with values (e.g. age, BMI) outside of the range for which the model is valid without warning; these individuals need to be removed prior to using the functions. See help files (`?calculate_ckdpc_egfr60_risk` and `?calculate_ckdpc_40egfr_risk`) for further explanation of variables.
+
+### 5-year risk of eGFR <60 mL/min/1.73m2 (ckdpc_egfr60_risk)
+
+Example:
+
+``` r
+results <- dataframe %>%
+  calculate_ckdpc_egfr60_risk(age = age_var,
+                              sex = sex_var,
+                              black_eth = black_eth_var,
+                              egfr = egfr_var,
+                              cvd = cvd_var,
+                              hba1c = hba1c_var,
+                              insulin = insulin_var,
+                              oha = oha_var,
+                              ever_smoker = ever_smoker_var,
+                              hypertension = hypertension_var,
+                              bmi = bmi_var,
+                              acr = acr_var,
+                              complete_acr = FALSE,
+                              remote = TRUE)
+```  
+
+&nbsp;
+
+### 3-year risk of 40% decline in eGFR (ckdpc_40egfr_risk)
+
+Example:
+
+``` r
+results <- dataframe %>%
+  calculate_ckdpc_40egfr_risk(age = age_var
+                              sex = sex_var,
+                              egfr = egfr_var,
+                              acr = acr_var,
+                              sbp = sbp_var,
+                              bp_meds = bp_meds_var,
+                              hf = hf_var,
+                              chd = chd_var,
+                              af = af_var,
+                              current_smoker = current_smoker_var,
+                              ex_smoker = ex_smoker_var,
+                              bmi = bmi_var,
+                              hba1c = hba1c_var,
+                              oha = oha_var,
+                              insulin = insulin_var,
+                              remote=TRUE)
 ```
