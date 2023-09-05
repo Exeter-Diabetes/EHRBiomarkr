@@ -1,4 +1,5 @@
-#' Calculate CKDPC risk score for 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (ckdpc_egfr60_risk; total and confirmed events) from Nelson RG, Grams ME, Ballew SH. Development of Risk Prediction Equations for Incident Chronic Kidney Disease. JAMA. doi:10.1001/jama.2019.17379 (https://jamanetwork.com/journals/jama/fullarticle/2755299).
+#' Calculate CKDPC risk score for 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (ckdpc_egfr60; total and confirmed events) from Nelson RG, Grams ME, Ballew SH. Development of Risk Prediction Equations for Incident Chronic Kidney Disease. JAMA. doi:10.1001/jama.2019.17379 (https://jamanetwork.com/journals/jama/fullarticle/2755299).
+#' User can specify whether to keep missing ACR/ACR values of 0 as missing/0 or to substitute missing/0 ACR for 10mg/g ('complete_acr'), as per the above paper (missing ACR indicator parameter not included). Default is for missing ACR to remain missing.
 
 #' @description calculate 5-year absolute risk of eGFR<60ml/min/1.73m2 in people with diabetes (total and confirmed events)
 #' @param dataframe dataframe containing variables for risk score
@@ -14,6 +15,7 @@
 #' @param hypertension current hypertension (defined as blood pressure of more than 140/90 mm Hg or use of antihypertensive medications; 0: no, 1: yes)
 #' @param bmi BMI in kg/m2
 #' @param acr urinary albumin:creatinine ratio in mg/mmol (note that mg/g is also used)
+#' @param complete_acr whether missing ACR and ACR values of 0 should be substituted with 10mg/g (TRUE). Default is FALSE i.e. missing ACR/0 values remains missing/0 and scores cannot be calculated for these people
 #' @param remote whether dataframe is local in R (remote=FALSE) or on a SQL server (remote=TRUE) - values will be calculated but incorrect if the wrong value for remote is used due to differences in how logs are calculated in R and SQL
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
@@ -22,7 +24,7 @@
 #' @importFrom dplyr select
 #' @export
 
-calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr, remote) {
+calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd, hba1c, insulin, oha, ever_smoker, hypertension, bmi, acr, complete_acr=FALSE, remote) {
   
   message("Note that values may be incorrect if 'remote' is not specified correctly (TRUE = on SQL server; FALSE = local in R)")
 
@@ -64,74 +66,71 @@ calculate_ckdpc_egfr60_risk = function(dataframe, age, sex, black_eth, egfr, cvd
     inner_join(ckdpc_egfr60_risk_vars, by="join_col", copy=TRUE)
     
   
-  # Do calculation
+  # Do calculations
   
     new_dataframe <- new_dataframe %>%
     
     mutate(female_sex=ifelse(!!sex_col=="female", 1L, 0L),
            no_dm_med=ifelse(!!insulin_col==0 & !!oha_col==0, 1L, 0L),
            hba1c_percent=(!!hba1c_col*0.09148)+2.152,
-           acr_mgg=!!acr_col*8.8402,
+           
+           acr_mgg=ifelse(complete_acr==FALSE, !!acr_col*8.8402, ifelse(!is.na(!!acr_col) & !!acr_col!=0, !!acr_col*8.8402, 10)),
            
            log_acr_var=if(remote==TRUE) sql('LOG(10.0, acr_mgg)') else log(acr_mgg, base=10),
-
+           
            ckdpc_egfr60_risk_total_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
-             exp_cons_total +
-             (age_cons * ((!!age_col/5) - 11)) +  
-             (female_cons * female_sex) +
-             (black_eth_cons * !!black_eth_col) +
-             (egfr_cons1 * (15 - (pmin(!!egfr_col, 90, na.rm=TRUE)/5))) +
-             (-(egfr_cons2 * (pmax(0, !!egfr_col-90, na.rm=TRUE)/5))) +
-             (cvd_cons * !!cvd_col) +
-             (hba1c_cons * (hba1c_percent-7)) +
-             (insulin_cons * !!insulin_col) +
-             (-(no_dm_med_cons * no_dm_med)) +
-             (hba1c_insulin_cons * (hba1c_percent-7) * !!insulin_col) +
-             (hba1c_no_dm_med_cons * (hba1c_percent-7) * no_dm_med) +
-             (-(ever_smoker_cons * !!ever_smoker_col)) +
-             (hypertension_cons * !!hypertension_col) +
-             (bmi_cons * ((!!bmi_col/5)-5.4)) +
-             (acr_cons * (log_acr_var - 1))),
-           
-           #ckdpc_egfr60_risk_total_score=100 * (1 - exp((-5^surv_total) * exp(ckdpc_egfr60_risk_total_lin_predictor))),
+                    exp_cons_total +
+                      (age_cons * ((!!age_col/5) - 11)) +  
+                      (female_cons * female_sex) +
+                      (black_eth_cons * !!black_eth_col) +
+                      (egfr_cons1 * (15 - (pmin(!!egfr_col, 90, na.rm=TRUE)/5))) +
+                      (-(egfr_cons2 * (pmax(0, !!egfr_col-90, na.rm=TRUE)/5))) +
+                      (cvd_cons * !!cvd_col) +
+                      (hba1c_cons * (hba1c_percent-7)) +
+                      (insulin_cons * !!insulin_col) +
+                      (-(no_dm_med_cons * no_dm_med)) +
+                      (hba1c_insulin_cons * (hba1c_percent-7) * !!insulin_col) +
+                      (hba1c_no_dm_med_cons * (hba1c_percent-7) * no_dm_med) +
+                      (-(ever_smoker_cons * !!ever_smoker_col)) +
+                      (hypertension_cons * !!hypertension_col) +
+                      (bmi_cons * ((!!bmi_col/5)-5.4)) +
+                      (acr_cons * (log_acr_var - 1))),
            
            ckdpc_egfr60_risk_total_score=100 * (1 - (new_surv_total^exp(ckdpc_egfr60_risk_total_lin_predictor))),
            
            ckdpc_egfr60_risk_confirmed_lin_predictor=
              ifelse(is.na(!!acr_col) | !!acr_col==0, NA,
-             exp_cons_confirmed +
-             (age_cons * ((!!age_col/5) - 11)) +  
-             (female_cons * female_sex) +
-             (black_eth_cons * !!black_eth_col) +
-             (egfr_cons1 * (15 - (pmin(!!egfr_col, 90, na.rm=TRUE)/5))) +
-             (-(egfr_cons2 * (pmax(0, !!egfr_col-90, na.rm=TRUE)/5))) +
-             (cvd_cons * !!cvd_col) +
-             (hba1c_cons * (hba1c_percent-7)) +
-             (insulin_cons * !!insulin_col) +
-             (-(no_dm_med_cons * no_dm_med)) +
-             (hba1c_insulin_cons * (hba1c_percent-7) * !!insulin_col) +
-             (hba1c_no_dm_med_cons * (hba1c_percent-7) * no_dm_med) +
-             (-(ever_smoker_cons * !!ever_smoker_col)) +
-             (hypertension_cons * !!hypertension_col) +
-             (bmi_cons * ((!!bmi_col/5)-5.4)) +
-             (acr_cons * (log_acr_var - 1))),
-            
-           #ckdpc_egfr60_risk_confirmed_score=100 * (1 - exp((-5^surv_confirmed) * exp(ckdpc_egfr60_risk_confirmed_lin_predictor))),
+                    exp_cons_confirmed +
+                      (age_cons * ((!!age_col/5) - 11)) +  
+                      (female_cons * female_sex) +
+                      (black_eth_cons * !!black_eth_col) +
+                      (egfr_cons1 * (15 - (pmin(!!egfr_col, 90, na.rm=TRUE)/5))) +
+                      (-(egfr_cons2 * (pmax(0, !!egfr_col-90, na.rm=TRUE)/5))) +
+                      (cvd_cons * !!cvd_col) +
+                      (hba1c_cons * (hba1c_percent-7)) +
+                      (insulin_cons * !!insulin_col) +
+                      (-(no_dm_med_cons * no_dm_med)) +
+                      (hba1c_insulin_cons * (hba1c_percent-7) * !!insulin_col) +
+                      (hba1c_no_dm_med_cons * (hba1c_percent-7) * no_dm_med) +
+                      (-(ever_smoker_cons * !!ever_smoker_col)) +
+                      (hypertension_cons * !!hypertension_col) +
+                      (bmi_cons * ((!!bmi_col/5)-5.4)) +
+                      (acr_cons * (log_acr_var - 1))),
            
            ckdpc_egfr60_risk_confirmed_score=100 * (1 - (new_surv_confirmed^exp(ckdpc_egfr60_risk_confirmed_lin_predictor))))
-    
-  
+           
+           
   # Keep linear predictors and scores and unique ID columns only
   new_dataframe <- new_dataframe %>%
-    select(id_col, ckdpc_egfr60_risk_total_score, ckdpc_egfr60_risk_total_lin_predictor, ckdpc_egfr60_risk_confirmed_score, ckdpc_egfr60_risk_confirmed_lin_predictor)
+    select(id_col, ckdpc_egfr60_risk_total_score, ckdpc_egfr60_total_risk_lin_predictor, ckdpc_egfr60_risk_confirmed_score, ckdpc_egfr60_risk_confirmed_lin_predictor)
 
   # Join back on to original data table 
   dataframe <- dataframe %>%
     inner_join(new_dataframe, by="id_col") %>%
     select(-id_col)
   
-  message("New columns 'ckdpc_egfr60_risk_total_score', 'ckdpc_egfr60_risk_total_lin_predictor', 'ckdpc_egfr60_risk_confirmed_score' and 'ckdp_egfr60_risk_confirmed_lin_predictor' added")
+  message("New columns 'ckdpc_egfr60_risk_total_score', 'ckdpc_egfr60_risk_total_lin_predictor', 'ckdpc_egfr60_risk_confirmed_score', and 'ckdpc_egfr60_risk_confirmed_lin_predictor' added")
   
   return(dataframe)
   
