@@ -405,7 +405,7 @@ calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smokin
   
   
   # Add bp_med and type_2 cols for missing variables
-  new_dataframe <- dataframe %>%
+  new_dataframe <- new_dataframe %>%
     mutate(new_bp_med_col = 0,
            new_type2_col = ifelse(!!type1_col==0, 1, 0))
   
