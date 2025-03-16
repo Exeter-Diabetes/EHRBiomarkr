@@ -20,6 +20,7 @@
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr case_when
 #' @importFrom DBI dbSendQuery
+#' @importFrom DBI dbClearResult
 
 impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_col, smoking_col, type1_col, type2_col, cvd_col, bp_med_col, cholhdl_col, sbp_col, bmi_col, collation="latin1") {
   
@@ -37,7 +38,9 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
   new_dataframe <- new_dataframe %>%
     inner_join(missingPredictors, by=setNames("sex", deparse(sex_col)), copy=TRUE)
   
-  
+  DBI::dbClearResult()
+                                                                           
+                                                                           
   # Calculate missing values
   new_dataframe <- new_dataframe %>%
   
@@ -147,6 +150,7 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
 #' @importFrom dplyr case_when
 #' @importFrom dplyr select
 #' @importFrom DBI dbSendQuery
+#' @importFrom DBI dbClearResult
 #' @export
 
 calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, type1, type2, fh_cvd, renal, af, bp_med, rheumatoid_arth, cholhdl, sbp, bmi, surv=NULL, collation="latin1") {
@@ -220,11 +224,11 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
   
   to_join_sex_var <- deparse(substitute(sex))
 
+  DBI::dbClearResult()
+                                                             
   new_dataframe <- new_dataframe %>%
+      inner_join(vars, by=setNames("sex", to_join_sex_var), copy=TRUE)
     
-    inner_join(vars, by=setNames("sex", to_join_sex_var), copy=TRUE)
-    
-  
   
   # Fill in missing BMI/SBP/chol:HDL
   
@@ -382,6 +386,7 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
 #' @importFrom dplyr select
 #' @importFrom dplyr case_when
 #' @importFrom DBI dbSendQuery
+#' @importFrom DBI dbClearResult                                      
 #' @export
 
 calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smoking, duration, type1, cvd, af, renal, hba1c, cholhdl, sbp, bmi, surv=NULL, collation="latin1") {
@@ -455,11 +460,11 @@ calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smokin
   DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
 
   to_join_sex_var <- deparse(substitute(sex))
-  
+
+  DBI::dbClearResult()
+                                                             
   new_dataframe <- new_dataframe %>%
-    
-    inner_join(vars, by=setNames("sex", to_join_sex_var), copy=TRUE)
-  
+     inner_join(vars, by=setNames("sex", to_join_sex_var), copy=TRUE)
   
   
   # Fill in missing BMI/SBP/chol:HDL
