@@ -21,7 +21,8 @@ calculate_qrisk2(
   cholhdl,
   sbp,
   bmi,
-  surv = NULL
+  surv = NULL,
+  collation = "latin1"
 )
 }
 \arguments{
@@ -58,6 +59,8 @@ calculate_qrisk2(
 \item{bmi}{BMI in kg/m2}
 
 \item{surv}{how many years survival to use in model (default 10)}
+
+\item{collation}{of input data if in MySQL (default is "latin1")}
 }
 \description{
 calculates QRISK2-2017 score

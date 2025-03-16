@@ -20,7 +20,8 @@ calculate_qdiabeteshf(
   cholhdl,
   sbp,
   bmi,
-  surv = NULL
+  surv = NULL,
+  collation = "latin1"
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ calculate_qdiabeteshf(
 \item{bmi}{BMI in kg/m2}
 
 \item{surv}{how many years survival to use in model (default 10)}
+
+\item{collation}{of input data if in MySQL (default is "latin1")}
 }
 \description{
 calculates QDiabetes-HF 2015 score

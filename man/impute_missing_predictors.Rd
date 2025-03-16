@@ -16,7 +16,8 @@ impute_missing_predictors(
   bp_med_col,
   cholhdl_col,
   sbp_col,
-  bmi_col
+  bmi_col,
+  collation = "latin1"
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ impute_missing_predictors(
 \item{sbp_col}{systolic blood pressure in mmHg}
 
 \item{bmi_col}{BMI in kg/m2}
+
+\item{collation}{of input data if in MySQL (default is "latin1")}
 }
 \description{
 impute BMI, SBP and chol_HDL ratio where missing for QRISK2-2017 and QDiabetes-HF-2015

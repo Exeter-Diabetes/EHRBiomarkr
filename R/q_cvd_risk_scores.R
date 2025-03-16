@@ -13,13 +13,15 @@
 #' @param sbp_col systolic blood pressure in mmHg
 #' @param bmi_col BMI in kg/m2
 #' @param cvd_col history of angina, heart attack or stroke (binary)
+#' @param collation of input data if in MySQL (default is "latin1")
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr case_when
+#' @importFrom DBI dbSendQuery
 
-impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_col, smoking_col, type1_col, type2_col, cvd_col, bp_med_col, cholhdl_col, sbp_col, bmi_col) {
+impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_col, smoking_col, type1_col, type2_col, cvd_col, bp_med_col, cholhdl_col, sbp_col, bmi_col, collation="latin1") {
   
   # Fetch constants from package
   male_missing_predictors <- cbind(sex="male",data.frame(unlist(lapply(EHRBiomarkr::qMissingPredictors$male, function(y) lapply(y, as.numeric)), recursive="FALSE")))
@@ -30,6 +32,8 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
   
   # Join constants to data table
   ## copy=TRUE as need to copy constants to MySQL from package
+  DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+  
   new_dataframe <- new_dataframe %>%
     inner_join(missingPredictors, by=setNames("sex", deparse(sex_col)), copy=TRUE)
   
@@ -135,15 +139,17 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
 #' @param sbp systolic blood pressure in mmHg
 #' @param bmi BMI in kg/m2
 #' @param surv how many years survival to use in model (default 10)
+#' @param collation of input data if in MySQL (default is "latin1")
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr case_when
 #' @importFrom dplyr select
+#' @importFrom DBI dbSendQuery
 #' @export
 
-calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, type1, type2, fh_cvd, renal, af, bp_med, rheumatoid_arth, cholhdl, sbp, bmi, surv=NULL) {
+calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, type1, type2, fh_cvd, renal, af, bp_med, rheumatoid_arth, cholhdl, sbp, bmi, surv=NULL, collation="latin1") {
   
   
   # Get handles for columns with values in data table
@@ -210,6 +216,8 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
   
   # Join constants to data table
   ## copy=TRUE as need to copy constants to MySQL from package
+  DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+  
   to_join_sex_var <- deparse(substitute(sex))
 
   new_dataframe <- new_dataframe %>%
@@ -365,6 +373,7 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
 #' @param sbp systolic blood pressure in mmHg
 #' @param bmi BMI in kg/m2
 #' @param surv how many years survival to use in model (default 10)
+#' @param collation of input data if in MySQL (default is "latin1")
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @importFrom dplyr row_number
@@ -372,9 +381,10 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
 #' @importFrom stats setNames
 #' @importFrom dplyr select
 #' @importFrom dplyr case_when
+#' @importFrom DBI dbSendQuery
 #' @export
 
-calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smoking, duration, type1, cvd, af, renal, hba1c, cholhdl, sbp, bmi, surv=NULL) {
+calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smoking, duration, type1, cvd, af, renal, hba1c, cholhdl, sbp, bmi, surv=NULL, collation="latin1") {
   
   
   # Get handles for columns with values in data table
@@ -442,6 +452,8 @@ calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smokin
   
   # Join constants to data table
   ## copy=TRUE as need to copy constants to MySQL from package
+  DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+
   to_join_sex_var <- deparse(substitute(sex))
   
   new_dataframe <- new_dataframe %>%
