@@ -33,12 +33,13 @@ impute_missing_predictors = function(new_dataframe, sex_col, age_col, ethrisk_co
   
   # Join constants to data table
   ## copy=TRUE as need to copy constants to MySQL from package
-  DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+  set_collation <- DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+  set_collation
   
   new_dataframe <- new_dataframe %>%
     inner_join(missingPredictors, by=setNames("sex", deparse(sex_col)), copy=TRUE)
   
-  DBI::dbClearResult()
+  DBI::dbClearResult(set_collation)
                                                                            
                                                                            
   # Calculate missing values
@@ -220,11 +221,12 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
   
   # Join constants to data table
   ## copy=TRUE as need to copy constants to MySQL from package
-  DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+  set_collation <- DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+  set_collation
   
   to_join_sex_var <- deparse(substitute(sex))
 
-  DBI::dbClearResult()
+  DBI::dbClearResult(set_collation)
                                                              
   new_dataframe <- new_dataframe %>%
       inner_join(vars, by=setNames("sex", to_join_sex_var), copy=TRUE)
@@ -457,11 +459,12 @@ calculate_qdiabeteshf = function(dataframe, sex, age, ethrisk, town=NULL, smokin
   
   # Join constants to data table
   ## copy=TRUE as need to copy constants to MySQL from package
-  DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
-
+  set_collation <- DBI::dbSendQuery(cprd$.con, paste0("SET CHARACTER SET ", collation, ";"))
+  set_collation
+  
   to_join_sex_var <- deparse(substitute(sex))
 
-  DBI::dbClearResult()
+  DBI::dbClearResult(set_collation)
                                                              
   new_dataframe <- new_dataframe %>%
      inner_join(vars, by=setNames("sex", to_join_sex_var), copy=TRUE)
