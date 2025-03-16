@@ -175,7 +175,7 @@ calculate_qrisk2 = function(dataframe, sex, age, ethrisk, town=NULL, smoking, ty
   
   
   # Add cvd col for missing variables
-  new_dataframe <- dataframe %>%
+  new_dataframe <- new_dataframe %>%
     mutate(new_cvd_col = 0)
   
   cvd_col <- as.symbol("new_cvd_col")
