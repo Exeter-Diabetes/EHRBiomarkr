@@ -1,6 +1,6 @@
 acr:
   lower: "0"
-  upper: "122"
+  upper: "450"
 alt:
   lower: "0"
   upper: "200"
@@ -28,7 +28,6 @@ fastingglucose:
 haematocrit:
   lower: "0.2"
   upper: "0.6"
-  
 haemoglobin:
   lower: "30"
   upper: "250"
@@ -46,7 +45,7 @@ ldl:
   upper: "20"
 pcr:
   lower: "0"
-  upper: "682"
+  upper: "1500"
 sbp:
   lower: "40"
   upper: "270"
